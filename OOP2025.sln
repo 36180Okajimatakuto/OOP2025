@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter01", "Chapter01", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductSample", "Chapter01\ProductSample\ProductSample.csproj", "{B49020A3-019D-4FB4-B70F-27F909CD3B10}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "chapter02", "chapter02", "{FFCC7CC5-1DCF-4B68-AB7A-A50E24402E3D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chapter02", "Chapter02", "{FFCC7CC5-1DCF-4B68-AB7A-A50E24402E3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceConverter", "Chapter02\DistanceConverter\DistanceConverter.csproj", "{30A8C393-A225-4D95-ADC2-05CD3C66B9D1}"
 EndProject

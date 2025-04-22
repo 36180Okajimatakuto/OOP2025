@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DistanceConverter
-{
-    public class FeetConverter
-        //メートルからフィートを求める
-        public double FromMeter(double meter) {
-        return meter / 0.3048;
-       }
+namespace DistanceConverter {
+    public static class FeetConverter {
+        public static double FromMeter(double meter) {
+            return meter / 0.3048;
+        }
 
-        public double ToMeter(double feet) {
+        //フィートからメートルを求める
+        public static double ToMeter(double feet) {
             return feet * 0.3048;
+        }
     }
 }
