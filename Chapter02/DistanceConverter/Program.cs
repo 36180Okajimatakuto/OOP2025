@@ -1,6 +1,9 @@
 ﻿
+using System.Diagnostics.Metrics;
+
 namespace DistanceConverter {
     internal class Program {
+
         static void Main(string[] args) {
             //コマンドライン引数で指定された範囲のフィートとメートルの対応表を出力する
 
@@ -53,8 +56,9 @@ namespace DistanceConverter {
             //        double feet = MeterToFeet(meter);
             //        Console.WriteLine($"{meter}m = {feet:0.0000}ft");
 
-        }
+
 
 
         }
     }
+}
