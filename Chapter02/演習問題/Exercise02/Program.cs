@@ -10,15 +10,13 @@ namespace Exercise02 {
             string input   = Console.ReadLine();
 
 
-            int number = int.Parse(input);
-            double.Parse(input);
-            Parse.input = num;
+        
 
 
 
 
 
-            if ( > 1) {
+            if ( 0> 1) {
 
                 //インチからメートルへ変換
 
