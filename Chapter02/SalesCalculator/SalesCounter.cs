@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SalesCalculator
-{
+namespace SalesCalculator {
     //売上集計クラス
-    class SalesCounter
-    {
+    class SalesCounter {
         private readonly List<Sale> _sales;
 
         //コンストラクタ
@@ -17,7 +15,7 @@ namespace SalesCalculator
 
         }
         //店舗別売上を求める
-        public Dictionary<string, int> GetPerStreSales() {
+        public Dictionary<string, int> GetPerStoreSales() {
             var dict = new Dictionary<string, int>();
             foreach (var sale in _sales) {
                 if (dict.ContainsKey(sale.ShopName)) dict[sale.ShopName] += sale.Amount;
@@ -27,6 +25,54 @@ namespace SalesCalculator
             }
             return dict;
         }
+        //売上データを読み込み、Saleオブジェクトのリストを返す
+        public static List<Sale> ReadSales(string filePath) {
+            //売上データを入れるリストオブジェクトを生成
+            List<Sale> sales = new List<Sale>();
+            //ファイルを一気に読み込み
+            string[] lines = File.ReadAllLines(filePath);
+            //読み込んだ行数分繰り返し
+            foreach (string line in lines) {
+                string[] items = line.Split(',');
+                //Saleオブジェクトを生成
+                Sale sale = new Sale() {
+                    ShopName = items[0],
+                    ProductCategory = items[1],
+                    Amount = int.Parse(items[2]),
+                };
+                sales.Add(sale);
 
+            }
+
+            return sales;
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ////カテゴリー別売上を求める
+            //public Dictionary<string, int> GetPerStoreSales() {
+            //    var dict = new Dictionary<string, int>();
+            //    foreach (var sale in _sales) {
+            //        if (dict.ContainsKey(sale.ProductCategory)) dict[sale.ProductCategory] += sale.Amount;
+            //        else
+            //            dict[sale.ProductCategory] = sale.Amount;
+
+            //    }
+            //    return dict;
+            //}
+
+
+
+
+        }
     }
 }
