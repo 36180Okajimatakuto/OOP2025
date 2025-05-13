@@ -1,10 +1,7 @@
 ﻿
 namespace SalesCalculator {
     internal class Program {
-        static void Main(string[] args) {
-
-            var a = 5;
-
+        static void Main(string[] args) {;
             var sales = new SalesCounter (@"data\sales.csv");
 
             var amountsPerStore = sales.GetPerStoreSales();
