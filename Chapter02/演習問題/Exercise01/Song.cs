@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Exercise01 {
     class Song {
-        //2.1.1
+        //2.1.1                                     = string.Empty;があるとより良い 
         //アーティスト名
         public string ArtistName { get; set; }
         //歌のタイトル
@@ -23,6 +23,7 @@ namespace Exercise01 {
             this.Length = Length;
             this.Title = Title;
         }
+        //thisいらない
 
 
 
