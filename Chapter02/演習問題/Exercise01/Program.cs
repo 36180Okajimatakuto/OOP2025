@@ -38,7 +38,7 @@ namespace Exercise01 {
                 };
            
 
-                //歌データを入れるリストオブジェクトへ登録
+                //歌データを入れるリストオブジェクトへ登録  
                 songs.Add(song);
 
                 Console.WriteLine();//改行
@@ -53,7 +53,7 @@ namespace Exercise01 {
 
 
         //2.1.4
-        private static void printSongs(List<Song> songs) {
+        private static void printSongs(IEnumerable<Song> songs) {
 #if false
             foreach (var song in songs) {
                 var minutes = song.Length / 60;
