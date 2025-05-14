@@ -18,11 +18,12 @@ namespace Exercise01 {
 
         //2.1.2
                 //コンストラクタ
-        public  Song(string Title, string ArtistName, int Length) {
-            this.ArtistName = ArtistName;
-            this.Length = Length;
-            this.Title = Title;
-        }
+        //public  Song(string title, string artistName, int length) {
+        //    this.Title = title;
+        //    this.ArtistName = artistName;
+        //    this.Length = length;
+
+        //}
         //thisいらない
 
 

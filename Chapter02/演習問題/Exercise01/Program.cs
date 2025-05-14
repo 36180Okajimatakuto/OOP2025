@@ -1,24 +1,59 @@
-﻿namespace Exercise01 {
+﻿using System;
+
+namespace Exercise01 {
     internal class Program {
         static void Main(string[] args) {
-            //2.1.3
-            var Song = new Song[] {
-                new Song("Let it be", "The Beatles",243),
-                new Song("Bridge Over Troubled Water","Simon & Garfunkel",293),
-                new Song("Close To You","Carpenters",276),
-                new Song("Honesty","Billy Joel",231),
-                new Song("I Will Always Love You","Whitney Houston",273), 
-            };
+            //歌データを入れるリストオブジェクトを生成
+            var songs = new List<Song>();
+            //****曲の登録****を出力
+            Console.WriteLine("****曲の登録****");
 
-            
+            //何件入力があるかわからないので無限ループ
+            while (true) {
 
 
+                //"曲名："を出力
+                Console.Write("曲名：");
+                //入力された曲名を取得
+                string title = Console.ReadLine();
+                //endが入力されたら登録終了
+                if (title.Equals("end",StringComparison.OrdinalIgnoreCase)) 
+                    return;
+
+                //"アーティスト:"を出力
+                Console.Write("アーティスト:");
+                //入力されたアーティスト名を取得
+                string artistName = Console.ReadLine();
+                //"演奏時間（秒）:"を出力
+                Console.Write("演奏時間（秒）:");
+                //入力された演奏時間を取得
+                int length = int.Parse(Console.ReadLine());
+                //Songインスタンスを生成
+               //Song song = new Song(title, ArtistName, Length);
+
+                Song song = new Song() {
+                    Title = title,
+                    ArtistName = artistName,
+                    Length = length
+                };
+           
+
+                //歌データを入れるリストオブジェクトへ登録
+                songs.Add(song);
+
+                Console.WriteLine();//改行
+            }
+        printSongs(songs);
         }
+        
+
+
+
 
 
 
         //2.1.4
-        private static void printSongs(Song[] songs) {
+        private static void printSongs(List<Song> songs) {
 #if false
             foreach (var song in songs) {
                 var minutes = song.Length / 60;
