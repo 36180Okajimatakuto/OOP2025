@@ -50,12 +50,22 @@ namespace Exercise02 {
             Console.WriteLine(Count);
         }
 
-        private static void Exercise2_3(object names) {
+        private static void Exercise2_3(List<String> names) {
+            var selected = names.Where(s => s.Contains('o')).ToArray();
+            foreach (var name in selected) {
+                Console.WriteLine(name);
 
+            }
         }
 
-        private static void Exercise2_4(object names) {
+        private static void Exercise2_4(List<String> names) {
+            var obj = names.Where(s => s.StartsWith('B')).Select(s => new { s, s.Length });
 
+            foreach (var data in obj) {
+                Console.WriteLine(data.s + ":" + data.Length + "文字");
+
+            }
+            //.Select(s => s.ToUpper());
         }
     }
 }
