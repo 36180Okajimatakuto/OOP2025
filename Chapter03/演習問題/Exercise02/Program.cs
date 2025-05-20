@@ -36,34 +36,26 @@ namespace Exercise02 {
 
 
                 var name = Console.ReadLine();
-                if (string.IsNullOrEmpty(name)) {
+                if (string.IsNullOrEmpty(name))
                     break;
-                
+
                 int index = names.FindIndex(s => s.Equals(name));
                 Console.WriteLine(index);
-            }
 
             }
-
-
-
-
-            }
-
         }
 
-        
-
-        private static void Exercise2_2(object names) {
-            names.Count();
+        private static void Exercise2_2(List<String> names) {
+            var Count = names.Count(s => s.Contains('o'));
+            Console.WriteLine(Count);
         }
 
         private static void Exercise2_3(object names) {
-            throw new NotImplementedException();
+
         }
 
         private static void Exercise2_4(object names) {
-            throw new NotImplementedException();
+
         }
     }
 }
