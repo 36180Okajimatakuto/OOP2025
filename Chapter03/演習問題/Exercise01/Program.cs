@@ -44,9 +44,9 @@ namespace Exercise01 {
             }
 
             void Exercise4(List<int> numbers) {
-                numbers.Select(n => n * 2).ToList().ForEach(Console.WriteLine);
+                numbers.Select(n => n * 2).ToList().ForEach(Console.WriteLine);//写し
 
-                }
+                
             }
         }
     }
