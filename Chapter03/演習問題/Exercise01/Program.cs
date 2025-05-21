@@ -30,7 +30,8 @@ namespace Exercise01 {
                     Console.WriteLine("存在していません");
             }
             void Exercise2(List<int> numbers) {
-                numbers.ForEach(s => Console.WriteLine(s % 2));
+                numbers.ForEach(s => Console.WriteLine(s / 2));
+
             }
             void Exercise3(List<int> numbers) {
 
