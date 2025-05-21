@@ -44,9 +44,7 @@ namespace Exercise01 {
             }
 
             void Exercise4(List<int> numbers) {
-                var selects = numbers.Select(n => n * 2);
-                foreach (var list in selects) {
-                    Console.WriteLine(list);
+                numbers.Select(n => n * 2).ToList().ForEach(Console.WriteLine);
 
                 }
             }
