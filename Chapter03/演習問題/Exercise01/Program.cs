@@ -34,6 +34,11 @@ namespace Exercise01 {
 
             }
             void Exercise3(List<int> numbers) {
+                var datas = numbers.Where(n => n <= 50);//写し
+                foreach (var num in datas) {
+                    Console.WriteLine(num);
+
+                }
 
             }
 
