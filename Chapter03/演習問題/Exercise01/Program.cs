@@ -38,12 +38,17 @@ namespace Exercise01 {
                 foreach (var num in datas) {
                     Console.WriteLine(num);
 
+
                 }
 
             }
 
             void Exercise4(List<int> numbers) {
+                var selects = numbers.Select(n => n * 2);
+                foreach (var list in selects) {
+                    Console.WriteLine(list);
 
+                }
             }
         }
     }
