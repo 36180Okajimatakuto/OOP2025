@@ -66,7 +66,7 @@ namespace Exercise02 {
             Console.WriteLine(genteiMax.Pages);
         }
 
-
+        　
 
 
 
