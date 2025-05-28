@@ -99,7 +99,11 @@ namespace Exercise02 {
         }
 
         private static void Exercise7(List<Book> books) {
+            var kensaku2 = books.Where(b => b.Title.Contains("C#") && b.Pages <= 500).Select(b => b.Title);
+            foreach (var title in kensaku2) {                                                       //お手本
+                Console.WriteLine(title);
 
+            }
 
         }
     }
