@@ -62,10 +62,9 @@ namespace Exercise02 {
         private static void Exercise5(List<Book> books) {
 
             var genteiMax = books
-            .Where(book => book.Price < 4000).OrderByDescending(book => book.Price).First();
+            .Where(book => book.Price < 4000).OrderByDescending(book => book.Pages).First();
 
-            Console.WriteLine("4000円以下の最高金額の本は");
-            Console.WriteLine("           " + genteiMax.Title + ":" + genteiMax.Price);
+            Console.WriteLine(genteiMax.Pages);
         }
 
 
@@ -93,8 +92,10 @@ namespace Exercise02 {
 
 
         private static void Exercise6(List<Book> books) {
-            var genteiMax = books.Where(book => book.Pages >= 400);
-
+            var genteiMax = books.Where(book => book.Pages >= 400).OrderByDescending(b=> b.Price);
+            foreach (var book in genteiMax) {
+                Console.WriteLine(book.Title + ":"+ book.Price);
+            }
         }
 
         private static void Exercise7(List<Book> books) {
