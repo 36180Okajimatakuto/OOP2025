@@ -63,10 +63,10 @@ namespace Exercise02 {
 
             var genteiMax = books.Where(book => book.Price < 4000).OrderByDescending(book => book.Pages).First();
 
-            Console.WriteLine(genteiMax.Pages);
+            Console.WriteLine(genteiMax.Pages);　
         }
 
-        　
+
 
 
 
