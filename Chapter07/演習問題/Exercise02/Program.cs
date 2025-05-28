@@ -49,8 +49,8 @@ namespace Exercise02 {
         }
 
         private static void Exercise3(List<Book> books) {
-            var kensaku = books.Average(b => b.Title.Contains("C#"));
-
+            var heikin = books.Where(book => book.Title.Contains("C#")).Average(book => book.Pages);
+            Console.WriteLine("平均ページ:" + heikin);
         }
 
         private static void Exercise4(List<Book> books) {
