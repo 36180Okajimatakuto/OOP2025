@@ -72,6 +72,7 @@ namespace Exercise01 {
         }
 
         private static void Exercise5(int[] numbers) {
+
             var count = numbers.Distinct().Count(n => n >= 10);
             Console.WriteLine(count);           //お手本
 
