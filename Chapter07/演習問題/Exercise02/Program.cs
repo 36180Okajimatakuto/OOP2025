@@ -54,7 +54,8 @@ namespace Exercise02 {
         }
 
         private static void Exercise4(List<Book> books) {
-
+            var nedan = books.Where(b => b.Price >4000).Select(books => books.Title).First();
+            Console.WriteLine(nedan);
 
         }
 
