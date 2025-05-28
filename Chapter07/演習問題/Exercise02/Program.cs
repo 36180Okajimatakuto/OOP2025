@@ -61,8 +61,36 @@ namespace Exercise02 {
 
         private static void Exercise5(List<Book> books) {
 
+            var genteiMax = books
+            .Where(book => book.Price < 4000).OrderByDescending(book => book.Price).First();
 
+            Console.WriteLine("4000円以下の最高金額の本は");
+            Console.WriteLine("           " + genteiMax.Title + ":" + genteiMax.Price);
         }
+
+
+
+
+
+
+
+
+            //foreach (var book in books) {
+            //    if (book.Price <= 4000) {
+            //        break;
+
+            //    }
+
+            //    books.Add(book);
+            //    foreach (var item in books) {
+            //        var bokker = books.Max(b => b.Price);
+            //        Console.WriteLine(bokker);
+            //    }
+            //}
+ 
+
+
+
 
         private static void Exercise6(List<Book> books) {
 
