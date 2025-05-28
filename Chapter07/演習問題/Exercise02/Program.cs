@@ -61,11 +61,37 @@ namespace Exercise02 {
 
         private static void Exercise5(List<Book> books) {
 
+            var genteiMax = books.Where(book => book.Price < 4000).OrderByDescending(book => book.Pages).First();
 
+            Console.WriteLine(genteiMax.Pages);
         }
 
-        private static void Exercise6(List<Book> books) {
 
+
+
+
+
+
+
+            //foreach (var book in books) {
+            //    if (book.Price <= 4000) {
+            //        break;
+
+            //    }
+
+            //    books.Add(book);
+            //    foreach (var item in books) {
+            //        var bokker = books.Max(b => b.Price);
+            //        Console.WriteLine(bokker);
+            //    }
+            //}
+ 
+
+
+
+
+        private static void Exercise6(List<Book> books) {
+            var genteiMax = books.Where(book => book.Pages >= 400);
 
         }
 
