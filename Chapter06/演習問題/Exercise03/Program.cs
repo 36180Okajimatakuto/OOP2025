@@ -24,7 +24,9 @@ namespace Exercise03 {
 
         private static void Exercise1(string text) {
 
-            string kuuransuu = "Jackdaws love my big sphinx of quartz";
+            //var spases = text.Count(c=>c ==  ' ');
+
+            
             int count = text.Count(c => c == ' ');
 
             Console.WriteLine($"空白の数: " + count);
@@ -43,23 +45,31 @@ namespace Exercise03 {
         private static void Exercise3(string text) {
 
 
+
+
+            //やんなくていいやつ
+
         }
 
         private static void Exercise4(string text) {
-            string tanngonoaidanokuurannwokensakusuruyou = "Jackdaws love my big sphinx of quartz";
-            int count = text.Count(c => c == ' ');
+            
+            //int count = text.Count(c => c == ' ');
+                                                                      // オリジナル
+            //Console.WriteLine("単語数は:" + (1 + count));
 
-            Console.WriteLine("単語数は:" + (1 + count));
+
+            var count = text.Split(' ').Length;
+            Console.WriteLine("単語数：" + count);//  模範解答
+
         }　
 
-            Console.WriteLine("単語数は:" + (1 + count));
-        }
+            
 
         
 
         private static void Exercise5(string text) {
-            var tangocount = text.Where(c => c < 4);
-            Console.WriteLine(tangocount);
+            //var tangocount = text.Where(c => c < 4);
+            //Console.WriteLine(tangocount);
 
 
             var words = text.Split(' ');
