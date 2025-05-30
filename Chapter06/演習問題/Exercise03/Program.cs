@@ -46,12 +46,18 @@ namespace Exercise03 {
         }
 
         private static void Exercise4(string text) {
+            string tanngonoaidanokuurannwokensakusuruyou = "Jackdaws love my big sphinx of quartz";
+            int count = text.Count(c => c == ' ');
+
+            Console.WriteLine("単語数は:" + (1 + count));
+        }　
 
 
-        }
+        
 
         private static void Exercise5(string text) {
-
+            var tangocount = text.Where(c => c < 4);
+            Console.WriteLine(tangocount);
 
         }
     }
