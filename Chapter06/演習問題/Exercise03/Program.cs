@@ -28,7 +28,7 @@ namespace Exercise03 {
             int count = text.Count(c => c == ' ');
 
             Console.WriteLine($"空白の数: " + count);
-        }
+        }　
 
 
         private static void Exercise2(string text) {
