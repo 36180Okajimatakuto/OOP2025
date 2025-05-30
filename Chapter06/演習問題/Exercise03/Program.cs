@@ -50,18 +50,16 @@ namespace Exercise03 {
             int count = text.Count(c => c == ' ');
 
             Console.WriteLine("単語数は:" + (1 + count));
+        }　
+
+            Console.WriteLine("単語数は:" + (1 + count));
         }
 
-
-
+        
 
         private static void Exercise5(string text) {
             var tangocount = text.Where(c => c < 4);
             Console.WriteLine(tangocount);
-
-
-
-
 
 
             var words = text.Split(' ');
