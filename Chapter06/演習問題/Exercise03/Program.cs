@@ -1,9 +1,15 @@
 ﻿
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Exercise03 {
     internal class Program {
         static void Main(string[] args) {
             var text = "Jackdaws love my big sphinx of quartz";
 
+            #region
             Console.WriteLine("6.3.1");
             Exercise1(text);
 
@@ -19,7 +25,26 @@ namespace Exercise03 {
             Console.WriteLine("6.3.5");
             Exercise5(text);
 
+            Console.WriteLine("6.3.99");
+            Exercise6(text);
+            #endregion
 
+        }
+
+        private static void Exercise6(string text) {
+
+            //var counts = text.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+
+            //var seiri = text.OrderBy(g => g);                                     //チャットGPTのやつ
+            //foreach (var pair in counts) {
+            //    Console.WriteLine(pair.Key +":" +pair.Value +"個");
+            //}
+
+
+            for (char te = 'a'; te <= 'z'; te++) {
+                int count = text.Count(t => char.ToLower(t) == te);
+                Console.WriteLine(te +": " + count);
+            }
         }
 
         private static void Exercise1(string text) {
@@ -44,12 +69,25 @@ namespace Exercise03 {
 
         private static void Exercise3(string text) {
 
+            var array = text.Split(' ');
+            var sb = new StringBuilder();
 
 
+             string str = "";
+            foreach (var word in array.Skip(0)) {
+                sb.Append(" ");
+                sb.Append(word);
+               
 
-            //やんなくていいやつ
-
+            }
+            Console.WriteLine(sb + ".");
+    
         }
+        
+
+
+       
+
 
         private static void Exercise4(string text) {
             
