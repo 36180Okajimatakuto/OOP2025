@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Data.SqlTypes;
 using System.Text;
 using System.Text.RegularExpressions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -33,6 +34,43 @@ namespace Exercise03 {
 
         private static void Exercise6(string text) {
 
+            var str = text.ToLower();
+
+            var alphDicCount = Enumerable.Range('a', 26).ToDictionary(num => ((char)num).ToString(), num => 0);
+
+            foreach (var alph in str) {
+                //alphDicCount[alph.ToString()]++; //お手本１
+
+
+            }
+            foreach (var item in alphDicCount) {
+                Console.WriteLine(item.Key + ":" + item.Value);
+
+            }
+
+            //******************************************************
+            var array = Enumerable.Repeat(0,26).ToString();
+            foreach (var alph in str) {
+               
+
+            }
+
+            for (char ch = 'a'; ch < 'z'; ch++) {
+                Console.WriteLine(ch + ":" + array[ch - 'a']);
+
+            }
+
+            //***************************************************
+            //aから順にカウントして出力
+            for (char ch = 'a'; ch < 'z'; ch++) {
+                Console.WriteLine(ch + ":" + text.Count(tc => tc == ch));
+            }
+
+        
+
+
+
+
             //var counts = text.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
 
             //var seiri = text.OrderBy(g => g);                                     //チャットGPTのやつ
@@ -40,11 +78,14 @@ namespace Exercise03 {
             //    Console.WriteLine(pair.Key +":" +pair.Value +"個");
             //}
 
-
-            for (char te = 'a'; te <= 'z'; te++) {
-                int count = text.Count(t => char.ToLower(t) == te);
-                Console.WriteLine(te +": " + count);
-            }
+            //　　↓アルファベットにするために必要
+            
+            //for (char te = 'a'; te <= 'z'; te++) {
+            //    int count = text.Count(t => char.ToLower(t) == te);
+           
+            //        Console.WriteLine(te + " : " + count);                自作
+                
+            //}
         }
 
         private static void Exercise1(string text) {
