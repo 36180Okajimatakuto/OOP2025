@@ -22,11 +22,14 @@ namespace Exercise01
         //5.1.2
         //設定されている西暦が21世紀か判定する
         //Yearが2001~2100の間ならtrue、それ以外ならfalseを返す
-        //public bool Is21Centur => {
+            public bool Is21Centur {
+            get {
+                return Year >= 2001 && Year <= 2100;
             }
+        }
 
 
-            //4.1.3
+            //5.1.3
 
             }
         
