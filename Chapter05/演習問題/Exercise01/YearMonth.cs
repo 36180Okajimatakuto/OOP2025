@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exercise01
-{
+namespace Exercise01 {
     public class YearMonth {
         public int Year { get; init; }
         public int Month { get; init; }
@@ -22,15 +21,29 @@ namespace Exercise01
         //5.1.2
         //設定されている西暦が21世紀か判定する
         //Yearが2001~2100の間ならtrue、それ以外ならfalseを返す
-            public bool Is21Centur {
-            get {
-                return Year >= 2001 && Year <= 2100;
-            }
-        }
+        public bool Is21Centur => 2001 <= Year && Year <= 2100;//お手本
+            //get {
+              
+            //    return Year >= 2001 && Year <= 2100;
+            
+       
 
 
             //5.1.3
+            public YearMonth AddOneMonth() {
 
+            if (Year >= 12) {
+                return new YearMonth(1,12);//Monthが１２月以外
+            } else {
+
+                return new YearMonth(12,1);                 //    Monthが１２月
             }
+
+
+
+
+        }
+    }
+}
         
 
