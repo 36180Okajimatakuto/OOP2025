@@ -11,7 +11,7 @@ namespace Exercise02 {
                 new YearMonth(2010, 9),
                 new YearMonth(2024, 12),
             };
-
+             
 
             #region
             Console.WriteLine("5.2.2");
