@@ -11,7 +11,7 @@ namespace Exercise02 {
                 new YearMonth(2010, 9),
                 new YearMonth(2024, 12),
             };
-             
+
 
             #region
             Console.WriteLine("5.2.2");
@@ -37,18 +37,18 @@ namespace Exercise02 {
 
             }
 
-            }
-
-
-        
-public static YearMonth? FindFirst21C(YearMonth[] ymCollection) {
-    foreach (var ym in ymCollection) {
-        if (ym.Is21Century) {
-            return ym;
         }
-    }
-    return null;
-}
+
+
+
+        public static YearMonth? FindFirst21C(YearMonth[] ymCollection) {
+            foreach (var ym in ymCollection) {
+                if (ym.Is21Century) {
+                    return ym;
+                }
+            }
+            return null;
+        }
 
 
         private static void Exercise4(YearMonth[] ymCollection) {
@@ -65,7 +65,7 @@ public static YearMonth? FindFirst21C(YearMonth[] ymCollection) {
 
 
             #region null 合体演算子 条件演算子
-            
+
 
             Console.WriteLine(FindFirst21C(ymCollection)?.ToString() ?? "21正規のデータはありません");
 
