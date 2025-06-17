@@ -38,9 +38,11 @@ namespace Exercise02 {
 
 
         //8.2.2
-        //public.bool Remove(string add) => ;
+        public bool Remove(string abb) => _dict.Remove(abb);
 
-
+        public IEnumerable<KeyValuePair<string, string>> GetAll() {//変換できない8.2.4のWhereを使えるようにするやつ
+            return _dict;
+        }
 
 
 
