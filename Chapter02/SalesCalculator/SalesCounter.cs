@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SalesCalculator {
-    //売上集計クラス
+    //売上集計クラスg
     class SalesCounter {
         private readonly IEnumerable<Sale> _sales;
-
+        
         //コンストラクタ
         public SalesCounter(string filePath) {
             _sales = ReadSales(filePath) ;
