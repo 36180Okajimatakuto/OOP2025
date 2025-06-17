@@ -101,7 +101,7 @@ namespace PrefCapitalLocationSystem {
             Console.WriteLine("9：終了");
             Console.Write(">");
             var menuSelect =  (SelectMenu)int.Parse(Console.ReadLine());
-            return menuSelect;
+            return menuSelect;                          //  ↑nullになる可能性がある場合に波線が表示される
         }
 
         //一覧表示処理
