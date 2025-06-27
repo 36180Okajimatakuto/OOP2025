@@ -17,7 +17,7 @@ namespace Exercise01 {
             //2024/03/09 19:03
             //string.Formatを使った例
             var date = new DateTime(2024, 03, 09, 19, 03, 09);//GPT使用
-            var hyouzi2 = string.Format("{0:yyyy/MM/dd HH:mm}", date);
+            var hyouzi2 = string.Format("{0:yyyy/MM/dd HH:mm}", date);//("{date:yyyy/MM/dd HH:mm}");でもOK
             Console.WriteLine(hyouzi2);
         }
         #endregion
