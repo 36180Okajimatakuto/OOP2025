@@ -32,10 +32,17 @@ namespace Exercise01 {
         private static void DisplayDatePattern3(DateTime dateTime) {
             var culture = new CultureInfo("ja-JP");
             culture.DateTimeFormat.Calendar = new JapaneseCalendar();
-            int nitizi = int.Parse(Console.ReadLine());
-            var nyuuryoku = new DateTime(nitizi);
+            Console.WriteLine("令和");
+            int seireki = int.Parse(Console.ReadLine());
+            Console.WriteLine("月");
+            int tuki = int.Parse(Console.ReadLine());
+            Console.WriteLine("日");
+            int niti = int.Parse(Console.ReadLine());
+            var nyuuryoku = new DateTime(seireki,tuki,niti);
             var dayofweek = culture.DateTimeFormat.GetDayName(nyuuryoku.DayOfWeek);
-            Console.WriteLine(dayofweek);
+            var hyouzi1 = nyuuryoku.ToString("令和yy年MM月dd日");
+            Console.Write(hyouzi1);
+            Console.WriteLine($"({dayofweek})");
         }
     }
 }
