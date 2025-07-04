@@ -9,7 +9,7 @@
         }
         // 9.2.1を呼び出すテスト用メソッド
         private static void Exercise1_1() {
-            var dt = new DateTime(2024, 7, 1);
+            var dt =  DateTime.Today;
             foreach (var dayofweek in Enum.GetValues(typeof(DayOfWeek))) {
                 Console.Write("{0:yyyy/MM/dd}の次週の{1}: ", dt, (DayOfWeek)dayofweek);
                 Console.WriteLine("{0:yyyy/MM/dd(ddd)}", NextWeek(dt, (DayOfWeek)dayofweek));
@@ -18,7 +18,7 @@
 
         // 9.2.1を呼び出すテスト用メソッド
         private static void Exercise1_2() {
-            var dt = new DateTime(2024, 8, 29);
+            var dt = DateTime.Today;
             foreach (var dayofweek in Enum.GetValues(typeof(DayOfWeek))) {
                 Console.Write("{0:yyyy/MM/dd}の次週の{1}: ", dt, (DayOfWeek)dayofweek);
                 Console.WriteLine("{0:yyyy/MM/dd(ddd)}", NextWeek(dt, (DayOfWeek)dayofweek));
@@ -28,9 +28,9 @@
         // 9.2.1【ここにプログラムを作成する】
         static DateTime NextWeek(DateTime date, DayOfWeek dayOfWeek) {
             var yokusyuu = (int)dayOfWeek - (int)(date.DayOfWeek);
-            
-                yokusyuu += 7;
-            
+
+            yokusyuu += 7;
+
             return date.AddDays(yokusyuu);
         }
 
@@ -43,13 +43,12 @@
 
         // 9.2.2【ここにプログラムを作成する】
         static int GetAge(DateOnly birthday, DateOnly targetDay) {
-            var tosi = today.Year - birthday.Year;
-            if (today < birthday.AddYears(tosi)) {
-                tosi--;//chatGPTのIF文
+            var age = targetDay.Year - birthday.Year;
+            if (targetDay < birthday.AddYears(age)) {
+                age--;
             }
-            Console.WriteLine("あなたは" + tosi + "歳です。");
-
-
+            return age;
         }
+    
     }
 }

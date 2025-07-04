@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SalesCalculator {
-    //売上集計クラスg
+    //売上集計クラス
     class SalesCounter {
         private readonly IEnumerable<Sale> _sales;
         

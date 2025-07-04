@@ -1,22 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Forms;
 
-namespace StopWacth
-{
-    public partial class Form1: Form
-    {
+namespace StopWacth {
+    public partial class Form1 : Form {
         Stopwatch sw = new Stopwatch();
 
-        public Form1()
-        {
+        public Form1() {
             InitializeComponent();
         }
 
