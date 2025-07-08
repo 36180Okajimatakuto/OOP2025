@@ -24,6 +24,23 @@ namespace CarReportSystem {
             pbPicture.Image = null;
         }
 
+        //記録者の履歴をコンボボックスへ登録（重複なし）
+        private void setCbAuthor(string author) {
+            //すでに登録済みか確認
+            if (!cbAuthor.Items.Contains(author)) {
+
+                cbAuthor.Items.Add(author);
+            }
+        }
+        //車名の履歴をコンボボックスへ登録（重複なし）
+        private void setCbCarName(string carName) {
+            if (!cbCarName.Items.Contains(carName)) {
+                cbCarName.Items.Add(carName);
+
+            }
+        }
+
+
         private void btRecordAdd_Click(object sender, EventArgs e) {
 
             if (cbAuthor.Text == string.Empty || cbCarName.Text == string.Empty) {
@@ -41,28 +58,13 @@ namespace CarReportSystem {
                 Date = dtpDate.Value
             };
             listCarReports.Add(carReport);
+            setCbAuthor(cbAuthor.Text); //コンボボックスへ登録
+            setCbCarName(cbCarName.Text);
             InputItemsAllClear();
 
 
         }
 
-
-
-        //記録者の履歴をコンボボックスへ登録（重複なし）
-        private void setCbAuthor(string author) {
-            //すでに登録済みか確認
-            if (!cbAuthor.Items.Contains(author)) {
-
-                cbAuthor.Items.Add(author);
-            }
-        }
-        //車名の履歴をコンボボックスへ登録（重複なし）
-        private void setCbCarName(string carName) {
-            if (!cbCarName.Items.Contains(carName)) {
-                cbCarName.Items.Add(carName);
-
-            }
-        }
 
         #region//入力項目をすべてクリア
         public void InputItemsAllClear() {
@@ -207,6 +209,39 @@ namespace CarReportSystem {
 
         }
 
+        #region ファイルを開くための処理
+        //ファイルオープン処理
+        private void reportOpenFile() {
+            if (ofdPicFileOpen.ShowDialog() == DialogResult.OK) {
+                try {
+                    //逆シリアル化でバイナリ形式を取り込む
+#pragma warning disable SYSLIB0011
+                    var bf = new BinaryFormatter();
+#pragma warning disable SYSLIB0011
+
+                    using (FileStream fs = File.Open(
+                        ofdPicFileOpen.FileName, FileMode.Open, FileAccess.Read)) {
+
+                        listCarReports = (BindingList<CarReport>)bf.Deserialize(fs);
+                        dgvRecord.DataSource = listCarReports;
+
+                        //コンボボックスに登録
+                        foreach (var report in listCarReports) {//もともと追加ボタンを押すと呼び出せるものを
+                            setCbAuthor(report.Author);         //リストから呼び出すようにする
+                            setCbCarName(report.CarName);
+                        }
+                    }
+                }
+                catch (Exception ex) {
+                    tsslbMessage.Text = "ファイル形式が違います";
+
+                }
+
+            }
+        }
+        #endregion
+
+        #region ファイルを保存するための処理
         //ファイルセーブ処理
         private void reportSaveFile() {
             if (sfdReportFileSave.ShowDialog() == DialogResult.OK) {
@@ -229,9 +264,16 @@ namespace CarReportSystem {
             }
 
         }
+        #endregion
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e) {
             reportSaveFile();
         }
+
+        private void 開くToolStripMenuItem_Click(object sender, EventArgs e) {
+            reportOpenFile();
+        }
+
+
     }
 }

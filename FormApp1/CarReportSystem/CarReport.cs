@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CarReportSystem {
+    [Serializable]
     public class CarReport {
-
         public enum MakerGroup {
             なし,
             トヨタ,
@@ -28,6 +29,7 @@ namespace CarReportSystem {
         [System.ComponentModel.DisplayName("レポート")]
         public string Report { get; set; } = string.Empty;  //レポート
         [System.ComponentModel.DisplayName("参考画像")]
+       //System.ComponentModel.Browsable(false)]
         public Image? Picture { get; set; }  //画像
     }
 }
