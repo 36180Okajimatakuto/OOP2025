@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using static CarReportSystem.CarReport;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -25,9 +26,14 @@ namespace CarReportSystem {
 
         private void btRecordAdd_Click(object sender, EventArgs e) {
 
+            if (cbAuthor.Text == string.Empty || cbCarName.Text == string.Empty) {
+                tsslbMessage.Text = "記録者、または車名が未入力です";
+                return;
+            }
+
             var carReport = new CarReport {
-                
-                Maker = GetRadioButtonMaker(),
+
+                Maker = getRadioButtonMaker(),
                 Author = cbAuthor.Text,
                 CarName = cbCarName.Text,
                 Report = tbReport.Text,
@@ -39,6 +45,8 @@ namespace CarReportSystem {
 
 
         }
+
+
 
         //記録者の履歴をコンボボックスへ登録（重複なし）
         private void setCbAuthor(string author) {
@@ -56,7 +64,7 @@ namespace CarReportSystem {
             }
         }
 
-        //入力項目をすべてクリア
+        #region//入力項目をすべてクリア
         public void InputItemsAllClear() {
             dtpDate.Value = DateTime.Today;
             cbAuthor.Text = string.Empty;
@@ -65,7 +73,10 @@ namespace CarReportSystem {
             tbReport.Text = string.Empty;
             pbPicture.Image = null;
         }
-        private MakerGroup GetRadioButtonMaker() {
+        #endregion
+
+        #region 車のメーカー
+        private MakerGroup getRadioButtonMaker() {
             if (rbToyota.Checked)
                 return MakerGroup.トヨタ;
             if (rbNissan.Checked)
@@ -79,9 +90,10 @@ namespace CarReportSystem {
 
             return MakerGroup.その他;
         }
+        #endregion
 
+        #region　一覧を表示
         public void dgvRecord_Click(object sender, EventArgs e) {
-
 
             dtpDate.Value = (DateTime)dgvRecord.CurrentRow.Cells["Date"].Value;
             cbAuthor.Text = (string)dgvRecord.CurrentRow.Cells["Author"].Value;
@@ -90,6 +102,9 @@ namespace CarReportSystem {
             tbReport.Text = (string)dgvRecord.CurrentRow.Cells["Report"].Value;
             pbPicture.Image = (Image)dgvRecord.CurrentRow.Cells["Picture"].Value;
         }
+        #endregion
+
+        #region 車の選択欄作成
         //指定したメーカーのラジオボタンをセット
         private void setRadioButtonMaker(MakerGroup targetMaker) {
             switch (targetMaker) {
@@ -115,7 +130,7 @@ namespace CarReportSystem {
             }
 
         }
-
+        #endregion
 
         //新規追加のイベントハンドラ
         private void btNewRcord_Click(object sender, EventArgs e) {
@@ -123,10 +138,13 @@ namespace CarReportSystem {
 
 
         }
+
+        #region 削除ボタンの行削除
         //削除ボタンのイベントハンドラ
         private void btRecordDelete_Click(object sender, EventArgs e) {
             //カーレポート管理用リストから、
             //該当するデータを削除する
+            //エラー止めるIF文
             if (dgvRecord.CurrentRow != null) {
                 // 選択されている行のインデックスを取得
                 int selectedIndex = dgvRecord.CurrentRow.Index;
@@ -141,22 +159,79 @@ namespace CarReportSystem {
                 }
             }
         }
+        #endregion
+
+        #region 指定セルへの再度書き込み
         //修正ボタンのイベントハンドラ
         private void btRecordModify_Click(object sender, EventArgs e) {
+
+            if (dgvRecord.Rows.Count == 0) return;
+
+            //入力しやすくする用
             int selectedIndex = dgvRecord.CurrentRow.Index;
-            
-            listCarReports[selectedIndex].Author  = cbAuthor.Text;
-            listCarReports[selectedIndex].Date    = dtpDate.Value;
-            listCarReports[selectedIndex].Maker   = GetRadioButtonMaker();
+
+            listCarReports[selectedIndex].Author = cbAuthor.Text;
+            listCarReports[selectedIndex].Date = dtpDate.Value;
+            listCarReports[selectedIndex].Maker = getRadioButtonMaker();
             listCarReports[selectedIndex].CarName = cbCarName.Text;
-            listCarReports[selectedIndex].Report  = tbReport.Text;
+            listCarReports[selectedIndex].Report = tbReport.Text;
             listCarReports[selectedIndex].Picture = pbPicture.Image;
 
 
         }
+        #endregion
 
         private void Form1_Load(object sender, EventArgs e) {
             InputItemsAllClear();
+
+            //交互に色を設定（データグリッドビュー）
+            dgvRecord.DefaultCellStyle.BackColor = Color.LightBlue;
+            dgvRecord.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
+
+        }
+
+        private void tsmiExit_Click(object sender, EventArgs e) {
+            Application.Exit();
+        }
+
+        //このアプリについてを選択したときのイベントハンドラ
+        private void bsmi_Click(object sender, EventArgs e) {
+            fmVersion fmv = new fmVersion();
+            fmv.Show();
+        }
+
+        private void 色設定ToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (cdColor.ShowDialog() == DialogResult.OK) {
+                BackColor = cdColor.Color;
+            }
+
+        }
+
+        //ファイルセーブ処理
+        private void reportSaveFile() {
+            if (sfdReportFileSave.ShowDialog() == DialogResult.OK) {
+                try {
+                    //バイナリ形式でシリアル
+#pragma warning disable SYSLIB0011
+                    var bf = new BinaryFormatter();
+#pragma warning disable SYSLIB0011
+                    using (FileStream fs = File.Open(
+                        sfdReportFileSave.FileName, FileMode.Create)) {
+                        bf.Serialize(fs, listCarReports);
+
+                    }
+                }
+                catch (Exception) {
+                    tsslbMessage.Text = "ファイル書き出しエラー";
+                }
+
+
+            }
+
+        }
+
+        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e) {
+            reportSaveFile();
         }
     }
 }
