@@ -8,7 +8,6 @@
 
         }
 
-        
 
         //メソッドの概要： データを取得。List生成
         private static IEnumerable<Student> ReadScore(string filePath) {
