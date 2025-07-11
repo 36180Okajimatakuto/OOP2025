@@ -10,8 +10,8 @@ namespace SalesCalculator {
         private readonly IEnumerable<Sale> _sales;
         
         //コンストラクタ
-        public SalesCounter(string filePath) {
-            _sales = ReadSales(filePath) ;
+        public SalesCounter(string fiuePath) {
+            _sales = ReadSales(fiuePath) ;
 
         }
         //店舗別売上を求める

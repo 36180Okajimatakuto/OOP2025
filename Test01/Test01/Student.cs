@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Test01 {
     public class Student {
-        String Name { get; } = String.Empty;
-        string Subject { get;} = String.Empty;
-        int Score { get; }
+        public String Name { get; } = String.Empty;
+        public string Subject { get; } = String.Empty;
+        public int Score { get; }
 
-
+        public Student(string name, string subject, int score) {
+            Name = name;
+            Subject = subject;
+            Score = score;
+        }
     }
 }
+
+
