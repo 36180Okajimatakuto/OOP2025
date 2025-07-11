@@ -70,7 +70,6 @@ namespace Exercise01 {
             try {
                 string jsonString = File.ReadAllText(filePath);
 
-                // JSON文字列をEmployee配列に変換（デシリアライズ）
                 Employee[] employees = JsonSerializer.Deserialize<Employee[]>(jsonString);
 
                 return employees;
