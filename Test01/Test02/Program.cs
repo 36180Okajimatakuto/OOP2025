@@ -74,7 +74,7 @@ namespace Test02 {
         //問題２　偶数の最大値を表示（式形式で記述せよ）
         //　　　　出力結果【94】
         private static void Exercise02(int[] numbers) {
-            var saidaiti = numbers.Max();
+            var saidaiti = numbers.Where(n => n % 2 == 0).Max();
             Console.WriteLine(saidaiti);
  
         }
@@ -83,28 +83,31 @@ namespace Test02 {
         //　　　　出力結果【12 14 17 20 31 35 40 48 53 76 87 91 94】
         private static void Exercise03(int[] numbers) {
             var narabikae = numbers.OrderBy(s => s);
-            Console.WriteLine(narabikae);
+            Console.WriteLine(string.Join(" ",narabikae));//?
 
         }
 
         //問題４　10以上50以下の数字のみを表示（即時実行でも可とする）
         //　　　　出力結果【12 14 20 40 35 31 17 48】
         private static void Exercise04(int[] numbers) {
-            
+            var hanni = numbers.Where(n => n >= 10 && n <= 50);
+            Console.WriteLine(string.Join(" ", hanni));
         }
 
         //問題５　Countメソッドを使い、小文字の'n'が含まれている都市名がいくつあるかカウントして結果を表示
         //　　　　出力結果【5】
         private static void Exercise05(List<string> cities) {
-            
+            var count = cities.Count(c => c.Contains('n'));
+            Console.WriteLine(count);
 
         }
 
         //問題６　全都市数
         //　　　　出力結果【8】
         private static void Exercise06(List<string> cities) {
-            
-
+            //var zensuu = cities.Count();
+            var zensuu = cities.Count(city => !string.IsNullOrEmpty(city));
+            Console.WriteLine(zensuu);
         }
 
         //問題７　各都市名をアルファベット順（昇順）に出力
@@ -118,8 +121,11 @@ namespace Test02 {
         //          Paris
         //          Tokyo】
         private static void Exercise07(List<string> cities) {
-            
+            var eigonarabikae = cities.OrderBy(c => c);  // 昇順に並べ替える
+            foreach (var c in eigonarabikae) {
+                Console.WriteLine(c);
 
+            }
         }
 
         //問題８　各都市の文字数
@@ -133,10 +139,10 @@ namespace Test02 {
         //　　　　  Canberra : 8文字
         //　　　　  Hong Kong : 9文字】
         private static void Exercise08(List<string> cities) {
-            
-
-
-
+            var citymozisuu = cities.Select(c => new { City = c, Length = c.Length });  
+            foreach (var c in citymozisuu) {
+                Console.WriteLine($"{c.City} : {c.Length}文字");
+            }
         }
 
         //問題９　各都市名と文字数を文字数の昇順で表示
@@ -150,10 +156,13 @@ namespace Test02 {
         //          New Delhi : 9文字
         //          Hong Kong : 9文字】
         private static void Exercise09(List<string> cities) {
-            
+            var mojisuunarabikae = cities.OrderBy(c => c.Length);
+            foreach (var c in mojisuunarabikae) {
+                Console.WriteLine($"{c} : {c.Length}文字");
 
 
 
+            }
         }
 
         //問題１０　６文字の都市名を表示
@@ -161,9 +170,12 @@ namespace Test02 {
         //        【London
         //          Berlin】
         private static void Exercise10(List<string> cities) {
-            
+            var rokumozicity = cities.Where(c => c.Length == 6);  
+            foreach (var c in rokumozicity) {
+                Console.WriteLine(c);
 
 
+            }
         }
     }
 }
