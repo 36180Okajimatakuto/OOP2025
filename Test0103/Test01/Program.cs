@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Test01._0 {
-    public class Program {
+﻿namespace Test01
+{
+    public class Program
+    {
         static void Main(string[] args)
         {
             var score = new ScoreCounter("StudentScore.csv");

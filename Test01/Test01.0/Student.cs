@@ -9,9 +9,9 @@ using System.Xml.Linq;
 namespace Test01._0
 {
     class Student {
-        public String Name { get; } = String.Empty;
-    public string Subject { get; } = String.Empty;
-    public int Score { get; }
+        public String Name { get; init; } = String.Empty;
+    public string Subject { get; init; } = String.Empty;
+    public int Score { get; init; }
 
     public Student(string name, string subject, int score) {
         Name = name;
