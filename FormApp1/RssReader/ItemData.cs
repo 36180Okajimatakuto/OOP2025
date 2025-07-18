@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RssReader
-{
-    class ItemData
-    {
-        public string Title { get; set; }
+namespace RssReader {
+    public class ItemData {
+        public required string? Title { get; set; }
+        public required string? Link { get; set; }
+
+
     }
 }
