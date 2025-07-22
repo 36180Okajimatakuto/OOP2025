@@ -24,12 +24,12 @@
         /// </summary>
         private void InitializeComponent() {
             btRssGet = new Button();
-            lbTitles = new ListBox();
             wvRssLink = new Microsoft.Web.WebView2.WinForms.WebView2();
             進むボタン = new Button();
             戻るボタン = new Button();
             お気に入り登録ボタン = new Button();
-            cbUrl = new ComboBox();
+            tbUrl = new TextBox();
+            cbList = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)wvRssLink).BeginInit();
             SuspendLayout();
             // 
@@ -44,27 +44,15 @@
             btRssGet.UseVisualStyleBackColor = true;
             btRssGet.Click += btRssGet_Click;
             // 
-            // lbTitles
-            // 
-            lbTitles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lbTitles.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            lbTitles.FormattingEnabled = true;
-            lbTitles.ItemHeight = 21;
-            lbTitles.Location = new Point(12, 75);
-            lbTitles.Name = "lbTitles";
-            lbTitles.Size = new Size(610, 109);
-            lbTitles.TabIndex = 2;
-            lbTitles.Click += lbTitles_Click;
-            // 
             // wvRssLink
             // 
             wvRssLink.AllowExternalDrop = true;
             wvRssLink.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             wvRssLink.CreationProperties = null;
             wvRssLink.DefaultBackgroundColor = Color.White;
-            wvRssLink.Location = new Point(12, 190);
+            wvRssLink.Location = new Point(12, 106);
             wvRssLink.Name = "wvRssLink";
-            wvRssLink.Size = new Size(610, 465);
+            wvRssLink.Size = new Size(610, 549);
             wvRssLink.TabIndex = 3;
             wvRssLink.ZoomFactor = 1D;
             // 
@@ -98,39 +86,47 @@
             お気に入り登録ボタン.UseVisualStyleBackColor = true;
             お気に入り登録ボタン.Click += お気に入り登録ボタン_Click;
             // 
-            // cbUrl
+            // tbUrl
             // 
-            cbUrl.FormattingEnabled = true;
-            cbUrl.Location = new Point(99, 30);
-            cbUrl.Name = "cbUrl";
-            cbUrl.Size = new Size(417, 23);
-            cbUrl.TabIndex = 7;
+            tbUrl.Location = new Point(99, 25);
+            tbUrl.Name = "tbUrl";
+            tbUrl.Size = new Size(417, 23);
+            tbUrl.TabIndex = 7;
+            // 
+            // cbList
+            // 
+            cbList.FormattingEnabled = true;
+            cbList.Location = new Point(12, 62);
+            cbList.Name = "cbList";
+            cbList.Size = new Size(610, 23);
+            cbList.TabIndex = 8;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(642, 667);
-            Controls.Add(cbUrl);
+            Controls.Add(cbList);
+            Controls.Add(tbUrl);
             Controls.Add(お気に入り登録ボタン);
             Controls.Add(戻るボタン);
             Controls.Add(進むボタン);
             Controls.Add(wvRssLink);
-            Controls.Add(lbTitles);
             Controls.Add(btRssGet);
             Name = "Form1";
             Text = "RSSリーダー";
             ((System.ComponentModel.ISupportInitialize)wvRssLink).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
         private Button btRssGet;
-        private ListBox lbTitles;
         private Microsoft.Web.WebView2.WinForms.WebView2 wvRssLink;
         private Button 進むボタン;
         private Button 戻るボタン;
         private Button お気に入り登録ボタン;
-        private ComboBox cbUrl;
+        private TextBox tbUrl;
+        private ComboBox cbList;
     }
 }
