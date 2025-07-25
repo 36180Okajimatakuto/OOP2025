@@ -33,35 +33,49 @@ namespace RssReader {
 
             foreach (var pair in rssSources) {
                 var item = new ListItem(pair.Key, pair.Value);
-                listBox1.Items.Add(item);
-                cbSave.Items.Add(item);
+                cbOutput.Items.Add(item);
             }
-
-            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
-            listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
+            #region Designer内容
+            cbOutput.Items.Insert(0, new ListItem("すべて", "ALL"));
+            btnAddNewRss.Click += btnAddNewRss_Click;
+            RSS内容一覧.SelectedIndexChanged += RSS内容一覧_SelectedIndexChanged;
             button1.Click += btRssGet_Click;
+            btnRemoveRss.Click += btnRemoveRss_Click;
 
             // WebView2 初期化
-            webView21.CoreWebView2InitializationCompleted += WebView_Initialized;
-            _ = webView21.EnsureCoreWebView2Async();
+            サイト表示.CoreWebView2InitializationCompleted += WebView_Initialized;
+            _ = サイト表示.EnsureCoreWebView2Async();
+            //恐竜ゲーム
+            サイト表示.Source = new Uri("https://dinorunner.com/jp/");
+            //パックマン
+            //サイト表示.Source = new Uri("https://www.google.com/logos/2010/pacman10-i.html");
         }
+        #endregion
 
         private void WebView_Initialized(object sender, CoreWebView2InitializationCompletedEventArgs e) {
             if (e.IsSuccess) {
-                webView21.CoreWebView2.Settings.IsScriptEnabled = true;
+                サイト表示.CoreWebView2.Settings.IsScriptEnabled = true;
             } else {
                 MessageBox.Show("WebView2 の初期化に失敗しました: " + e.InitializationException.Message);
             }
         }
 
-        private async void listBox2_SelectedIndexChanged(object sender, EventArgs e) {
-            int index = listBox2.SelectedIndex;
-            if (index < 0 || items == null || index >= items.Count) return;
+        private async void RSS内容一覧_SelectedIndexChanged(object sender, EventArgs e) {
+            int index = RSS内容一覧.SelectedIndex;
+            if (index < 0 || items == null || index >= items.Count) {
+                // デフォルトリンクを表示
+                if (サイト表示.CoreWebView2 != null)
+                    //恐竜ゲーム
+                    サイト表示.CoreWebView2.Navigate("https://dinorunner.com/jp/");
+                //パックマン
+                //サイト表示.CoreWebView2.Navigate("https://www.google.com/logos/2010/pacman10-i.html");
+                return;
+            }
 
             string link = items[index].Link;
 
             try {
-                webView21.CoreWebView2.Navigate(link);
+                サイト表示.CoreWebView2.Navigate(link);
             }
             catch (Exception ex) {
                 MessageBox.Show("ページ表示に失敗しました: " + ex.Message);
@@ -69,7 +83,7 @@ namespace RssReader {
         }
 
         private async void btRssGet_Click(object sender, EventArgs e) {
-            if (cbSave.SelectedItem is not ListItem sel) {
+            if (cbOutput.SelectedItem is not ListItem sel) {
                 MessageBox.Show("カテゴリを選択してください。");
                 return;
             }
@@ -85,28 +99,99 @@ namespace RssReader {
                         Link = (string)x.Element("link")
                     }).ToList();
 
-                listBox2.Items.Clear();
-                items.ForEach(i => listBox2.Items.Add(i.Title));
+                RSS内容一覧.Items.Clear();
+                items.ForEach(i => RSS内容一覧.Items.Add(i.Title));
             }
             catch (Exception ex) {
                 MessageBox.Show("RSS取得に失敗しました: " + ex.Message);
             }
         }
+        #region 登録ボタン　全選択付き
+        //private void 登録ボタン_Click(object sender, EventArgs e) {
+        //    if (cbSave.SelectedItem is not ListItem sel) {
+        //        MessageBox.Show("登録するカテゴリを選択してください。");
+        //        return;
+        //    }
 
-        private void 登録ボタン_Click(object sender, EventArgs e) {
-            if (cbSave.SelectedItem is not ListItem sel) {
-                MessageBox.Show("登録するカテゴリを選択してください。");
+        //    if (sel.Url == "ALL") {
+        //        // 「すべて」が選択された場合
+        //        int addedCount = 0;
+        //        foreach (var pair in rssSources) {
+        //            string url = pair.Value;
+        //            string name = pair.Key;
+        //            var item = new ListItem(name, url);
+
+        //            if (!favorites.Contains(url)) {
+        //                favorites.Add(url);
+        //                cbOutput.Items.Add(item);
+        //                SaveSearchResult("全URL保存", url);
+        //                addedCount++;
+        //            }
+        //        }
+
+        //        if (addedCount > 0) {
+        //            MessageBox.Show($"{addedCount} 件のRSSを登録しました。");
+        //        } else {
+        //            MessageBox.Show("すべてのRSSはすでに登録済みです。");
+        //        }
+        //    } else {
+        //        // 通常の1カテゴリ登録
+        //        if (!favorites.Contains(sel.Url)) {
+        //            favorites.Add(sel.Url);
+        //            cbOutput.Items.Add(sel);
+        //            SaveSearchResult("URL保存", sel.Url);
+        //            MessageBox.Show("登録されました");
+        //        } else {
+        //            MessageBox.Show("既に登録済みです");
+        //        }
+        //    }
+        //}
+        #endregion
+
+        #region RSSURL追加
+        private void btnAddNewRss_Click(object sender, EventArgs e) {
+            string name = txtNewName.Text.Trim();
+            string url = txtNewUrl.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(url)) {
+                MessageBox.Show("カテゴリ名とURLの両方を入力してください。");
                 return;
             }
-            if (!favorites.Contains(sel.Url)) {
-                favorites.Add(sel.Url);
-                cbOutput.Items.Add(sel);
-                SaveSearchResult("URL保存", sel.Url);
-                MessageBox.Show("登録されました");
-            } else {
-                MessageBox.Show("既に登録済みです");
+
+            if (!Uri.IsWellFormedUriString(url, UriKind.Absolute)) {
+                MessageBox.Show("有効なURLを入力してください。");
+                return;
             }
+
+            if (favorites.Contains(url)) {
+                MessageBox.Show("このURLは既に登録済みです。");
+                return;
+            }
+
+            var item = new ListItem(name, url);
+            favorites.Add(url);
+            cbOutput.Items.Add(item);
+            SaveSearchResult("ユーザー追加RSS", url);
+            MessageBox.Show("新しいRSSリンクが登録されました！");
         }
+        #endregion
+
+        private void btnRemoveRss_Click(object sender, EventArgs e) {
+            if (cbOutput.SelectedItem is not ListItem selected) {
+                MessageBox.Show("削除するRSSを選択してください。");
+                return;
+            }
+            DialogResult result = MessageBox.Show($"「{selected.Name}」を削除しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes) {
+                favorites.Remove(selected.Url);
+                favorites.Remove((string)selected.Name);
+                cbOutput.Items.Remove(selected);
+                SaveSearchResult("RSS削除", selected.Url);
+                MessageBox.Show("RSSが削除されました。");
+
+                    };
+        }
+        
 
         public void SaveSearchResult(string keyword, string result) {
             File.AppendAllText(historyFilePath, $"{DateTime.Now:u}\t{keyword}\n{result}\n");

@@ -12,8 +12,11 @@ namespace RssReader {
         public class ListItem {
             public string DisplayName { get; }
             public string Url { get; }
+            public object Name { get; internal set; }
+
             public ListItem(string d, string u) { DisplayName = d; Url = u; }
             public override string ToString() => DisplayName;
+
         }
     }
 }
