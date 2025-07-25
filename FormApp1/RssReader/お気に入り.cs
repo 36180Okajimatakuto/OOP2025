@@ -26,7 +26,6 @@ namespace RssReader {
             { "地域", "https://news.yahoo.co.jp/rss/topics/local.xml" }
         };
 
-        // 画像背景関連
         private string imageSaveFolder;
         private string configPath;
 
@@ -53,11 +52,22 @@ namespace RssReader {
             _ = サイト表示.EnsureCoreWebView2Async();
             サイト表示.Source = new Uri("https://dinorunner.com/jp/");
 
+            // ← 追加: ナビゲーション完了イベント登録
+            サイト表示.NavigationCompleted += サイト表示_NavigationCompleted;
+
             // 背景画像復元
             LoadBackgroundImage();
 
-            // 背景画像設定ボタンのイベント登録（例：btnLoadImage）
+            // 背景画像設定ボタンのイベント登録
             btnLoadImage.Click += btnLoadImage_Click;
+
+            // ← 追加: 戻る・進むボタンのイベント
+            戻るボタン.Click += 戻るボタン_Click;
+            進むボタン.Click += 進むボタン_Click;
+
+            // ← 追加: 初期無効化
+            戻るボタン.Enabled = false;
+            進むボタン.Enabled = false;
         }
 
         private void WebView_Initialized(object sender, CoreWebView2InitializationCompletedEventArgs e) {
@@ -158,7 +168,6 @@ namespace RssReader {
         // =======================
         // 背景画像関連
         // =======================
-
         private void btnLoadImage_Click(object sender, EventArgs e) {
             using (OpenFileDialog ofd = new OpenFileDialog()) {
                 ofd.Title = "背景に設定する画像ファイルを選択してください";
@@ -216,9 +225,30 @@ namespace RssReader {
             }
         }
 
+        // ← 追加: 戻るボタン処理
+        private void 戻るボタン_Click(object sender, EventArgs e) {
+            if (サイト表示.CoreWebView2 != null && サイト表示.CoreWebView2.CanGoBack) {
+                サイト表示.CoreWebView2.GoBack();
+            }
+        }
+
+        // ← 追加: 進むボタン処理
+        private void 進むボタン_Click(object sender, EventArgs e) {
+            if (サイト表示.CoreWebView2 != null && サイト表示.CoreWebView2.CanGoForward) {
+                サイト表示.CoreWebView2.GoForward();
+            }
+        }
+
+        // ← 追加: ナビゲーション状態に応じてボタンを更新
+        private void サイト表示_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e) {
+            if (サイト表示.CoreWebView2 != null) {
+                戻るボタン.Enabled = サイト表示.CoreWebView2.CanGoBack;
+                進むボタン.Enabled = サイト表示.CoreWebView2.CanGoForward;
+            }
+        }
     }
 
-    // ListItemクラスの例（必要ならご利用ください）
+    #region　クラス
     public class ListItem {
         public string Name { get; }
         public string Url { get; }
@@ -228,4 +258,7 @@ namespace RssReader {
         }
         public override string ToString() => Name;
     }
+
+
+    #endregion
 }

@@ -126,6 +126,7 @@
             Controls.Add(btRssGet);
             Name = "Form1";
             Text = "RSSリーダー";
+            Load += Form1_Load_1;
             ((System.ComponentModel.ISupportInitialize)wvRssLink).EndInit();
             ResumeLayout(false);
             PerformLayout();

@@ -25,13 +25,15 @@
             label1 = new Label();
             label2 = new Label();
             btnLoadImage = new Button();
+            戻るボタン = new Button();
+            進むボタン = new Button();
             ((System.ComponentModel.ISupportInitialize)サイト表示).BeginInit();
             SuspendLayout();
             // 
             // button1
             // 
             button1.Font = new Font("Yu Gothic UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            button1.Location = new Point(545, 11);
+            button1.Location = new Point(623, 5);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(75, 48);
@@ -54,7 +56,7 @@
             // 
             cbOutput.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 128);
             cbOutput.FormattingEnabled = true;
-            cbOutput.Location = new Point(93, 13);
+            cbOutput.Location = new Point(194, 13);
             cbOutput.Margin = new Padding(3, 4, 3, 4);
             cbOutput.Name = "cbOutput";
             cbOutput.Size = new Size(423, 40);
@@ -103,7 +105,7 @@
             // btnRemoveRss
             // 
             btnRemoveRss.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btnRemoveRss.Location = new Point(12, 11);
+            btnRemoveRss.Location = new Point(109, 11);
             btnRemoveRss.Margin = new Padding(3, 4, 3, 4);
             btnRemoveRss.Name = "btnRemoveRss";
             btnRemoveRss.Size = new Size(75, 48);
@@ -145,11 +147,34 @@
             btnLoadImage.Text = "背景";
             btnLoadImage.UseVisualStyleBackColor = true;
             // 
+            // 戻るボタン
+            // 
+            戻るボタン.Location = new Point(-1, 24);
+            戻るボタン.Name = "戻るボタン";
+            戻るボタン.Size = new Size(52, 23);
+            戻るボタン.TabIndex = 18;
+            戻るボタン.Text = "戻る";
+            戻るボタン.UseVisualStyleBackColor = true;
+            戻るボタン.Click += 戻るボタン_Click;
+            // 
+            // 進むボタン
+            // 
+            進むボタン.AllowDrop = true;
+            進むボタン.Location = new Point(57, 24);
+            進むボタン.Name = "進むボタン";
+            進むボタン.Size = new Size(46, 23);
+            進むボタン.TabIndex = 19;
+            進むボタン.Text = "進む";
+            進むボタン.UseVisualStyleBackColor = true;
+            進むボタン.Click += 進むボタン_Click;
+            // 
             // お気に入り
             // 
             AutoScaleDimensions = new SizeF(7F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 697);
+            Controls.Add(進むボタン);
+            Controls.Add(戻るボタン);
             Controls.Add(btnLoadImage);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -184,5 +209,7 @@
         private Label label1;
         private Label label2;
         private Button btnLoadImage;
+        private Button 戻るボタン;
+        private Button 進むボタン;
     }
 }
