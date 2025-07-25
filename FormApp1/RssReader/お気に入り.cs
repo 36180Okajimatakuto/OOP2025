@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Linq;
 using Microsoft.Web.WebView2.Core;
-using static RssReader.ItemData; // WebView2 名前空間
+using System.Drawing;
 
 namespace RssReader {
     public partial class お気に入り : Form {
@@ -26,16 +26,22 @@ namespace RssReader {
             { "地域", "https://news.yahoo.co.jp/rss/topics/local.xml" }
         };
 
+        // 画像背景関連
+        private string imageSaveFolder;
+        private string configPath;
+
         public EventHandler listBox1_SelectedIndexChanged { get; }
 
         public お気に入り() {
             InitializeComponent();
 
+            imageSaveFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "images");
+            configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.txt");
+
             foreach (var pair in rssSources) {
                 var item = new ListItem(pair.Key, pair.Value);
                 cbOutput.Items.Add(item);
             }
-            #region Designer内容
             cbOutput.Items.Insert(0, new ListItem("すべて", "ALL"));
             btnAddNewRss.Click += btnAddNewRss_Click;
             RSS内容一覧.SelectedIndexChanged += RSS内容一覧_SelectedIndexChanged;
@@ -45,12 +51,14 @@ namespace RssReader {
             // WebView2 初期化
             サイト表示.CoreWebView2InitializationCompleted += WebView_Initialized;
             _ = サイト表示.EnsureCoreWebView2Async();
-            //恐竜ゲーム
             サイト表示.Source = new Uri("https://dinorunner.com/jp/");
-            //パックマン
-            //サイト表示.Source = new Uri("https://www.google.com/logos/2010/pacman10-i.html");
+
+            // 背景画像復元
+            LoadBackgroundImage();
+
+            // 背景画像設定ボタンのイベント登録（例：btnLoadImage）
+            btnLoadImage.Click += btnLoadImage_Click;
         }
-        #endregion
 
         private void WebView_Initialized(object sender, CoreWebView2InitializationCompletedEventArgs e) {
             if (e.IsSuccess) {
@@ -63,12 +71,8 @@ namespace RssReader {
         private async void RSS内容一覧_SelectedIndexChanged(object sender, EventArgs e) {
             int index = RSS内容一覧.SelectedIndex;
             if (index < 0 || items == null || index >= items.Count) {
-                // デフォルトリンクを表示
                 if (サイト表示.CoreWebView2 != null)
-                    //恐竜ゲーム
                     サイト表示.CoreWebView2.Navigate("https://dinorunner.com/jp/");
-                //パックマン
-                //サイト表示.CoreWebView2.Navigate("https://www.google.com/logos/2010/pacman10-i.html");
                 return;
             }
 
@@ -106,49 +110,7 @@ namespace RssReader {
                 MessageBox.Show("RSS取得に失敗しました: " + ex.Message);
             }
         }
-        #region 登録ボタン　全選択付き
-        //private void 登録ボタン_Click(object sender, EventArgs e) {
-        //    if (cbSave.SelectedItem is not ListItem sel) {
-        //        MessageBox.Show("登録するカテゴリを選択してください。");
-        //        return;
-        //    }
 
-        //    if (sel.Url == "ALL") {
-        //        // 「すべて」が選択された場合
-        //        int addedCount = 0;
-        //        foreach (var pair in rssSources) {
-        //            string url = pair.Value;
-        //            string name = pair.Key;
-        //            var item = new ListItem(name, url);
-
-        //            if (!favorites.Contains(url)) {
-        //                favorites.Add(url);
-        //                cbOutput.Items.Add(item);
-        //                SaveSearchResult("全URL保存", url);
-        //                addedCount++;
-        //            }
-        //        }
-
-        //        if (addedCount > 0) {
-        //            MessageBox.Show($"{addedCount} 件のRSSを登録しました。");
-        //        } else {
-        //            MessageBox.Show("すべてのRSSはすでに登録済みです。");
-        //        }
-        //    } else {
-        //        // 通常の1カテゴリ登録
-        //        if (!favorites.Contains(sel.Url)) {
-        //            favorites.Add(sel.Url);
-        //            cbOutput.Items.Add(sel);
-        //            SaveSearchResult("URL保存", sel.Url);
-        //            MessageBox.Show("登録されました");
-        //        } else {
-        //            MessageBox.Show("既に登録済みです");
-        //        }
-        //    }
-        //}
-        #endregion
-
-        #region RSSURL追加
         private void btnAddNewRss_Click(object sender, EventArgs e) {
             string name = txtNewName.Text.Trim();
             string url = txtNewUrl.Text.Trim();
@@ -174,7 +136,6 @@ namespace RssReader {
             SaveSearchResult("ユーザー追加RSS", url);
             MessageBox.Show("新しいRSSリンクが登録されました！");
         }
-        #endregion
 
         private void btnRemoveRss_Click(object sender, EventArgs e) {
             if (cbOutput.SelectedItem is not ListItem selected) {
@@ -184,19 +145,87 @@ namespace RssReader {
             DialogResult result = MessageBox.Show($"「{selected.Name}」を削除しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes) {
                 favorites.Remove(selected.Url);
-                favorites.Remove((string)selected.Name);
                 cbOutput.Items.Remove(selected);
                 SaveSearchResult("RSS削除", selected.Url);
                 MessageBox.Show("RSSが削除されました。");
-
-                    };
+            }
         }
-        
 
         public void SaveSearchResult(string keyword, string result) {
             File.AppendAllText(historyFilePath, $"{DateTime.Now:u}\t{keyword}\n{result}\n");
         }
+
+        // =======================
+        // 背景画像関連
+        // =======================
+
+        private void btnLoadImage_Click(object sender, EventArgs e) {
+            using (OpenFileDialog ofd = new OpenFileDialog()) {
+                ofd.Title = "背景に設定する画像ファイルを選択してください";
+                ofd.Filter = "画像ファイル|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+
+                if (ofd.ShowDialog() == DialogResult.OK) {
+                    string sourcePath = ofd.FileName;
+
+                    if (!Directory.Exists(imageSaveFolder)) {
+                        Directory.CreateDirectory(imageSaveFolder);
+                    }
+
+                    string destPath = Path.Combine(imageSaveFolder, Path.GetFileName(sourcePath));
+
+                    try {
+                        File.Copy(sourcePath, destPath, true);
+
+                        if (this.BackgroundImage != null) {
+                            this.BackgroundImage.Dispose();
+                        }
+
+                        this.BackgroundImage = Image.FromFile(destPath);
+                        this.BackgroundImageLayout = ImageLayout.Stretch;
+
+                        File.WriteAllText(configPath, Path.GetFileName(destPath));
+
+                        MessageBox.Show("背景画像を設定しました。\nファイル: " + destPath);
+                    }
+                    catch (Exception ex) {
+                        MessageBox.Show("画像のコピーまたは読み込みに失敗しました:\n" + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void LoadBackgroundImage() {
+            if (!File.Exists(configPath)) return;
+
+            string fileName = File.ReadAllText(configPath).Trim();
+            if (string.IsNullOrEmpty(fileName)) return;
+
+            string imagePath = Path.Combine(imageSaveFolder, fileName);
+            if (!File.Exists(imagePath)) return;
+
+            try {
+                if (this.BackgroundImage != null) {
+                    this.BackgroundImage.Dispose();
+                }
+
+                this.BackgroundImage = Image.FromFile(imagePath);
+                this.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+            catch (Exception ex) {
+                MessageBox.Show("背景画像の読み込みに失敗しました:\n" + ex.Message);
+            }
+        }
+
     }
 
-
+    // ListItemクラスの例（必要ならご利用ください）
+    public class ListItem {
+        public string Name { get; }
+        public string Url { get; }
+        public ListItem(string name, string url) {
+            Name = name;
+            Url = url;
+        }
+        public override string ToString() => Name;
+    }
 }

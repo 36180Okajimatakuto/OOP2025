@@ -30,6 +30,7 @@
             お気に入り登録ボタン = new Button();
             tbUrl = new TextBox();
             cbList = new ComboBox();
+            btnLoadImage = new Button();
             ((System.ComponentModel.ISupportInitialize)wvRssLink).BeginInit();
             SuspendLayout();
             // 
@@ -101,11 +102,21 @@
             cbList.Size = new Size(610, 23);
             cbList.TabIndex = 8;
             // 
+            // btnLoadImage
+            // 
+            btnLoadImage.Location = new Point(99, 2);
+            btnLoadImage.Name = "btnLoadImage";
+            btnLoadImage.Size = new Size(75, 23);
+            btnLoadImage.TabIndex = 9;
+            btnLoadImage.Text = "背景";
+            btnLoadImage.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(642, 667);
+            Controls.Add(btnLoadImage);
             Controls.Add(cbList);
             Controls.Add(tbUrl);
             Controls.Add(お気に入り登録ボタン);
@@ -128,5 +139,6 @@
         private Button お気に入り登録ボタン;
         private TextBox tbUrl;
         private ComboBox cbList;
+        private Button btnLoadImage;
     }
 }

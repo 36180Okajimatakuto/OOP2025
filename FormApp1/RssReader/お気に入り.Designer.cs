@@ -24,15 +24,17 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             label1 = new Label();
             label2 = new Label();
+            btnLoadImage = new Button();
             ((System.ComponentModel.ISupportInitialize)サイト表示).BeginInit();
             SuspendLayout();
             // 
             // button1
             // 
             button1.Font = new Font("Yu Gothic UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            button1.Location = new Point(562, 12);
+            button1.Location = new Point(545, 11);
+            button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(75, 40);
+            button1.Size = new Size(75, 48);
             button1.TabIndex = 1;
             button1.Text = "取得";
             button1.UseVisualStyleBackColor = true;
@@ -41,17 +43,19 @@
             // 
             RSS内容一覧.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             RSS内容一覧.FormattingEnabled = true;
-            RSS内容一覧.ItemHeight = 15;
-            RSS内容一覧.Location = new Point(12, 127);
+            RSS内容一覧.ItemHeight = 18;
+            RSS内容一覧.Location = new Point(12, 152);
+            RSS内容一覧.Margin = new Padding(3, 4, 3, 4);
             RSS内容一覧.Name = "RSS内容一覧";
-            RSS内容一覧.Size = new Size(776, 154);
+            RSS内容一覧.Size = new Size(776, 184);
             RSS内容一覧.TabIndex = 5;
             // 
             // cbOutput
             // 
             cbOutput.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 128);
             cbOutput.FormattingEnabled = true;
-            cbOutput.Location = new Point(111, 12);
+            cbOutput.Location = new Point(93, 13);
+            cbOutput.Margin = new Padding(3, 4, 3, 4);
             cbOutput.Name = "cbOutput";
             cbOutput.Size = new Size(423, 40);
             cbOutput.TabIndex = 6;
@@ -62,42 +66,47 @@
             サイト表示.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             サイト表示.CreationProperties = null;
             サイト表示.DefaultBackgroundColor = Color.White;
-            サイト表示.Location = new Point(12, 295);
+            サイト表示.Location = new Point(12, 354);
+            サイト表示.Margin = new Padding(3, 4, 3, 4);
             サイト表示.Name = "サイト表示";
-            サイト表示.Size = new Size(776, 274);
+            サイト表示.Size = new Size(776, 329);
             サイト表示.TabIndex = 9;
             サイト表示.ZoomFactor = 1D;
             // 
             // btnAddNewRss
             // 
             btnAddNewRss.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            btnAddNewRss.Location = new Point(388, 81);
+            btnAddNewRss.Location = new Point(413, 81);
+            btnAddNewRss.Margin = new Padding(3, 4, 3, 4);
             btnAddNewRss.Name = "btnAddNewRss";
-            btnAddNewRss.Size = new Size(104, 35);
+            btnAddNewRss.Size = new Size(104, 55);
             btnAddNewRss.TabIndex = 10;
             btnAddNewRss.Text = "新規登録";
             btnAddNewRss.UseVisualStyleBackColor = true;
             // 
             // txtNewUrl
             // 
-            txtNewUrl.Location = new Point(111, 98);
+            txtNewUrl.Location = new Point(179, 111);
+            txtNewUrl.Margin = new Padding(3, 4, 3, 4);
             txtNewUrl.Name = "txtNewUrl";
-            txtNewUrl.Size = new Size(243, 23);
+            txtNewUrl.Size = new Size(228, 25);
             txtNewUrl.TabIndex = 11;
             // 
             // txtNewName
             // 
-            txtNewName.Location = new Point(111, 63);
+            txtNewName.Location = new Point(179, 78);
+            txtNewName.Margin = new Padding(3, 4, 3, 4);
             txtNewName.Name = "txtNewName";
-            txtNewName.Size = new Size(243, 23);
+            txtNewName.Size = new Size(228, 25);
             txtNewName.TabIndex = 12;
             // 
             // btnRemoveRss
             // 
             btnRemoveRss.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
-            btnRemoveRss.Location = new Point(12, 12);
+            btnRemoveRss.Location = new Point(12, 11);
+            btnRemoveRss.Margin = new Padding(3, 4, 3, 4);
             btnRemoveRss.Name = "btnRemoveRss";
-            btnRemoveRss.Size = new Size(75, 40);
+            btnRemoveRss.Size = new Size(75, 48);
             btnRemoveRss.TabIndex = 13;
             btnRemoveRss.Text = "削除";
             btnRemoveRss.UseVisualStyleBackColor = true;
@@ -110,26 +119,38 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(22, 71);
+            label1.Location = new Point(93, 81);
             label1.Name = "label1";
-            label1.Size = new Size(54, 15);
+            label1.Size = new Size(68, 18);
             label1.TabIndex = 15;
             label1.Text = "カテゴリ名";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(40, 101);
+            label2.Location = new Point(109, 118);
             label2.Name = "label2";
-            label2.Size = new Size(28, 15);
+            label2.Size = new Size(32, 18);
             label2.TabIndex = 16;
             label2.Text = "URL";
             // 
+            // btnLoadImage
+            // 
+            btnLoadImage.Font = new Font("UD デジタル 教科書体 NP", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            btnLoadImage.Location = new Point(741, 3);
+            btnLoadImage.Margin = new Padding(3, 4, 3, 4);
+            btnLoadImage.Name = "btnLoadImage";
+            btnLoadImage.Size = new Size(58, 34);
+            btnLoadImage.TabIndex = 17;
+            btnLoadImage.Text = "背景";
+            btnLoadImage.UseVisualStyleBackColor = true;
+            // 
             // お気に入り
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 581);
+            ClientSize = new Size(800, 697);
+            Controls.Add(btnLoadImage);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(btnRemoveRss);
@@ -140,6 +161,8 @@
             Controls.Add(cbOutput);
             Controls.Add(RSS内容一覧);
             Controls.Add(button1);
+            Font = new Font("メイリオ", 9F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "お気に入り";
             Text = "URL登録";
             ((System.ComponentModel.ISupportInitialize)サイト表示).EndInit();
@@ -160,5 +183,6 @@
         private ContextMenuStrip contextMenuStrip1;
         private Label label1;
         private Label label2;
+        private Button btnLoadImage;
     }
 }
