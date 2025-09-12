@@ -13,7 +13,7 @@ namespace RssReader {
         private List<string> favorites = new List<string>();
         private string historyFilePath = "search_history.txt";
         private List<ItemData> items;
-
+        #region URLリンク
         private Dictionary<string, string> rssSources = new Dictionary<string, string> {
             { "主要", "https://news.yahoo.co.jp/rss/topics/top-picks.xml" },
             { "国内", "https://news.yahoo.co.jp/rss/topics/domestic.xml" },
@@ -25,7 +25,7 @@ namespace RssReader {
             { "科学", "https://news.yahoo.co.jp/rss/topics/science.xml" },
             { "地域", "https://news.yahoo.co.jp/rss/topics/local.xml" }
         };
-
+        #endregion
         private string imageSaveFolder;
         private string configPath;
 
@@ -41,12 +41,12 @@ namespace RssReader {
                 var item = new ListItem(pair.Key, pair.Value);
                 cbOutput.Items.Add(item);
             }
+            #region Designerのなかのやつ
             cbOutput.Items.Insert(0, new ListItem("すべて", "ALL"));
             btnAddNewRss.Click += btnAddNewRss_Click;
             RSS内容一覧.SelectedIndexChanged += RSS内容一覧_SelectedIndexChanged;
             button1.Click += btRssGet_Click;
             btnRemoveRss.Click += btnRemoveRss_Click;
-
             // WebView2 初期化
             サイト表示.CoreWebView2InitializationCompleted += WebView_Initialized;
             _ = サイト表示.EnsureCoreWebView2Async();
@@ -69,7 +69,7 @@ namespace RssReader {
             戻るボタン.Enabled = false;
             進むボタン.Enabled = false;
         }
-
+        #endregion
         private void WebView_Initialized(object sender, CoreWebView2InitializationCompletedEventArgs e) {
             if (e.IsSuccess) {
                 サイト表示.CoreWebView2.Settings.IsScriptEnabled = true;
@@ -164,7 +164,7 @@ namespace RssReader {
         public void SaveSearchResult(string keyword, string result) {
             File.AppendAllText(historyFilePath, $"{DateTime.Now:u}\t{keyword}\n{result}\n");
         }
-
+        #region 背景画像
         // =======================
         // 背景画像関連
         // =======================
@@ -224,7 +224,8 @@ namespace RssReader {
                 MessageBox.Show("背景画像の読み込みに失敗しました:\n" + ex.Message);
             }
         }
-
+        #endregion
+        #region ボタン処理
         // ← 追加: 戻るボタン処理
         private void 戻るボタン_Click(object sender, EventArgs e) {
             if (サイト表示.CoreWebView2 != null && サイト表示.CoreWebView2.CanGoBack) {
@@ -247,6 +248,8 @@ namespace RssReader {
             }
         }
     }
+    #endregion
+    
 
     #region　クラス
     public class ListItem {
