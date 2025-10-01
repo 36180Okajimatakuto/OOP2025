@@ -185,6 +185,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApplication", "WPF\Sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorChecker", "WPF\ColorChecker\ColorChecker\ColorChecker.csproj", "{EFD3FEBC-45DC-402D-8873-B1BEA6CEA6B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConverterApp", "WPF\ConverterApp\ConverterApp.csproj", "{B59CA9C5-7B39-4449-A43E-33E9FE03B804}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -645,6 +647,14 @@ Global
 		{EFD3FEBC-45DC-402D-8873-B1BEA6CEA6B2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EFD3FEBC-45DC-402D-8873-B1BEA6CEA6B2}.Release|x86.ActiveCfg = Release|Any CPU
 		{EFD3FEBC-45DC-402D-8873-B1BEA6CEA6B2}.Release|x86.Build.0 = Release|Any CPU
+		{B59CA9C5-7B39-4449-A43E-33E9FE03B804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B59CA9C5-7B39-4449-A43E-33E9FE03B804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B59CA9C5-7B39-4449-A43E-33E9FE03B804}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B59CA9C5-7B39-4449-A43E-33E9FE03B804}.Debug|x86.Build.0 = Debug|Any CPU
+		{B59CA9C5-7B39-4449-A43E-33E9FE03B804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B59CA9C5-7B39-4449-A43E-33E9FE03B804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B59CA9C5-7B39-4449-A43E-33E9FE03B804}.Release|x86.ActiveCfg = Release|Any CPU
+		{B59CA9C5-7B39-4449-A43E-33E9FE03B804}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -719,6 +729,7 @@ Global
 		{1705F269-1BA0-44A4-AD42-BE122B06FFCF} = {02EF47E7-47E8-4937-B6DD-8F70C8964FD5}
 		{5225CA9B-EBA3-4D93-B237-28016BF205B0} = {711D5333-9035-42EA-AB5A-6D4D87EDE8EF}
 		{EFD3FEBC-45DC-402D-8873-B1BEA6CEA6B2} = {711D5333-9035-42EA-AB5A-6D4D87EDE8EF}
+		{B59CA9C5-7B39-4449-A43E-33E9FE03B804} = {711D5333-9035-42EA-AB5A-6D4D87EDE8EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A715F17-BD52-40D7-9287-1C6890FE3EBB}
