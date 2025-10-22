@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CustomerApp"
         mc:Ignorable="d"
-        Title="顧客管理Application" Height="600" Width="800">
+        Title="顧客管理Application" Height="600" Width="814">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" />
@@ -13,27 +13,39 @@
             <ColumnDefinition Width="483.72"/>
         </Grid.ColumnDefinitions>
 
+        <!--住所からMAPを使いその場所の画像を取得し、表示（開発中）-->
+        <StackPanel Orientation="Horizontal" Margin="10,450,10,10">
+            <TextBox x:Name="MapSearchTextBox" Width="223" Height="30" />
+            <Button Content="地図検索" Click="MapSearchButton_Click" Margin="5,0,0,0" />
+        </StackPanel>
+
+        <Image x:Name="MapImage" Width="480" Height="360" Stretch="Uniform" />
+
         <!-- 入力フォーム -->
         <StackPanel Grid.Column="0" Margin="10,0,10,0" Height="544" VerticalAlignment="Center">
             <TextBlock Text="名前" Margin="0,5" Width="172" />
             <TextBox x:Name="NameTextBox" Width="158" Margin="0,0,0,0"/>
 
             <TextBlock Text="電話番号" Margin="0,10,0,5" Width="178" />
-            <TextBox x:Name="PhoneTextBox" Width="150" />
+            <TextBox x:Name="PhoneTextBox" Width="150" Foreground="DarkRed" />
 
             <TextBlock Text="住所" Margin="0,10,0,5" Width="166" />
-            <TextBox x:Name="AddressTextBox" Width="148" />
+            <TextBox x:Name="AddressTextBox" Width="148" Foreground="DarkGreen"/>
 
-            <TextBlock Margin="0,10,0,5" Width="162" ><Run Text="画像"/><Run Language="ja-jp" Text="  ↓"/></TextBlock>
+            <TextBlock Margin="0,10,0,5" Width="162" >
+                <Run Text="画像"/>
+                <Run Language="ja-jp" Text=" ↓"/>
+            </TextBlock>
             <Image x:Name="CustomerImage" Height="150" Width="150" Stretch="Uniform" />
 
             <Button Content="画像を選択" Click="SelectImage_Click" Margin="0,10,0,0" Height="26" />
-            <!-- 検索バー　（制作途中）-->
-            <TextBlock Text="検索" Margin ="0,10,0,5" Width="41" RenderTransformOrigin="0.5,0.5" Height="29" FontSize="20"/>
-            <TextBox x:Name="SeachTextBox" Width="216" Margin="0,10,0,10" RenderTransformOrigin="0.5,0.5" Height="29"/>
 
+            <!-- 検索バー -->
+            <TextBlock Text="検索" Width="48" Height="29" FontSize="20" VerticalAlignment="Center" TextAlignment="Center" />
+            <TextBox x:Name="SearchTextBox" Width="216" Height="29" TextChanged="SearchTextBox_TextChanged" Margin="5,0,0,0"/>
+            <Button Content="クリア" Width="80" Margin="5,0,0,0" Click="ClearSearchButton_Click"/>
 
-            <StackPanel Orientation="Vertical" Margin="0,-525,0,0" HorizontalAlignment="Right" Width="66" Height="325">
+            <StackPanel Orientation="Vertical" Margin="0,-499,0,0" HorizontalAlignment="Right" Width="66" Height="325">
                 <Button Content="追加" Click="Add_Click" Width="56" Margin="0,0,-10,28" />
                 <Button Content="更新" Click="Update_Click" Width="56" Margin="0,0,-10,30" />
                 <Button Content="削除" Click="Delete_Click" Width="56" Margin="0,0,-10,0"/>
@@ -42,7 +54,7 @@
 
         <!-- 顧客一覧 -->
         <ListView x:Name="CustomerListView" Grid.Column="1" Margin="10,10,10,10" 
-                  SelectionChanged="CustomerListView_SelectionChanged" Grid.ColumnSpan="2">
+                  SelectionChanged="CustomerListView_SelectionChanged" Grid.ColumnSpan="2" Foreground="Teal">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="40" DisplayMemberBinding="{Binding Id}" />

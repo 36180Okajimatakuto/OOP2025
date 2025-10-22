@@ -81,7 +81,7 @@
             <!-- 名前入力 + 登録ボタン -->
             <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="-23,0,0,10" HorizontalAlignment="Left" Width="236">
                 <Grid Width="120" Height="23" Margin="0,0,5,0">
-                    <TextBox x:Name="colorNameTextBox" TextChanged="colorNameTextBox_TextChanged" Margin="24,0,-30,0"/>
+                    <TextBox x:Name="colorNameTextBox" TextChanged="colorNameTextBox_TextChanged" Margin="24,0,-30,0" Height="23" VerticalAlignment="Top"/>
                     <TextBlock x:Name="placeholderText" Text="名前" IsHitTestVisible="False" Foreground="Gray" 
                    VerticalAlignment="Center" Margin="24,0,-30,0"/>
                 </Grid>
