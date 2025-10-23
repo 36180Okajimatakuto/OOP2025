@@ -61,6 +61,15 @@
                     <GridViewColumn Header="名前" Width="100" DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="電話番号" Width="100" DisplayMemberBinding="{Binding Phone}" />
                     <GridViewColumn Header="住所" Width="150" DisplayMemberBinding="{Binding Address}" />
+                    <GridViewColumn Header="画像" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Width="60" Height="60"
+                   Stretch="Uniform"
+                   Source="{Binding ImageSource}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
