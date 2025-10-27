@@ -5,29 +5,32 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace CustomerApp {
-
-
-
     public partial class MainWindow : Window {
         private SQLiteAsyncConnection _database;
         private Customer _selectedCustomer;
         private string _dbPath = Path.Combine(Environment.CurrentDirectory, "customers.db3");
         private byte[] _selectedImageBytes;
+        private readonly HttpClient _httpClient = new HttpClient();
+
+        private CancellationTokenSource _ctsZip;
 
         public MainWindow() {
             InitializeComponent();
             _database = new SQLiteAsyncConnection(_dbPath);
             InitDatabase();
+
+            // 郵便番号自動取得用イベント
+            AddressTextBox.TextChanged += AddressTextBox_TextChanged;
         }
 
         private async void InitDatabase() {
@@ -40,12 +43,14 @@ namespace CustomerApp {
             CustomerListView.ItemsSource = customers;
         }
 
+        // ==================== CRUD ====================
         private async void Add_Click(object sender, RoutedEventArgs e) {
             var customer = new Customer {
                 Name = NameTextBox.Text,
                 Phone = PhoneTextBox.Text,
                 Address = AddressTextBox.Text,
-                Picture = _selectedImageBytes
+                Picture = _selectedImageBytes,
+                Postcode = PostcodeTextBox.Text
             };
 
             await _database.InsertAsync(customer);
@@ -63,6 +68,7 @@ namespace CustomerApp {
             _selectedCustomer.Phone = PhoneTextBox.Text;
             _selectedCustomer.Address = AddressTextBox.Text;
             _selectedCustomer.Picture = _selectedImageBytes;
+            _selectedCustomer.Postcode = PostcodeTextBox.Text;
 
             await _database.UpdateAsync(_selectedCustomer);
             ClearForm();
@@ -83,17 +89,13 @@ namespace CustomerApp {
         private void CustomerListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (CustomerListView.SelectedItem is Customer selected) {
                 _selectedCustomer = selected;
-
                 NameTextBox.Text = selected.Name;
                 PhoneTextBox.Text = selected.Phone;
                 AddressTextBox.Text = selected.Address;
+                PostcodeTextBox.Text = selected.Postcode;
                 _selectedImageBytes = selected.Picture;
 
-                if (_selectedImageBytes != null && _selectedImageBytes.Length > 0) {
-                    CustomerImage.Source = ByteArrayToImage(_selectedImageBytes);
-                } else {
-                    CustomerImage.Source = null;
-                }
+                CustomerImage.Source = _selectedImageBytes != null ? ByteArrayToImage(_selectedImageBytes) : null;
             }
         }
 
@@ -113,6 +115,7 @@ namespace CustomerApp {
             NameTextBox.Text = "";
             PhoneTextBox.Text = "";
             AddressTextBox.Text = "";
+            PostcodeTextBox.Text = "";
             CustomerImage.Source = null;
             _selectedCustomer = null;
             _selectedImageBytes = null;
@@ -126,25 +129,18 @@ namespace CustomerApp {
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.StreamSource = ms;
             image.EndInit();
+            image.Freeze();
             return image;
         }
 
-        // =================== ここから検索機能 ===================
-
-        private async void SearchButton_Click(object sender, RoutedEventArgs e) {
-            await SearchCustomers();
-        }
-        //自動検索機能（文字を入力したらすぐに検索する機能
+        // ==================== 検索 ====================
         private async void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
             string keyword = SearchTextBox.Text.Trim();
-
             if (string.IsNullOrEmpty(keyword)) {
-                // キーワードが空なら全件表示
                 await LoadCustomers();
                 return;
             }
 
-            // 名前・電話・住所のいずれかにキーワードが含まれるものを検索
             var filtered = await _database.Table<Customer>()
                 .Where(c => c.Name.Contains(keyword) || c.Phone.Contains(keyword) || c.Address.Contains(keyword))
                 .ToListAsync();
@@ -157,65 +153,73 @@ namespace CustomerApp {
             await LoadCustomers();
         }
 
-        private async Task SearchCustomers() {
-            string keyword = SearchTextBox.Text.Trim();
+        // ==================== 郵便番号自動取得 ====================
+        private void AddressTextBox_TextChanged(object sender, TextChangedEventArgs e) {
+            _ctsZip?.Cancel();
 
-            if (string.IsNullOrEmpty(keyword)) {
-                await LoadCustomers();
-                return;
-            }
-            //修正中
-            //    var query = _database.Table<Customer>().Where(c =>
-            //        c.Name.Contains(keyword) ||
-            //        c.Phone.Contains(keyword) ||
-            //        c.Address.Contains(keyword));
-
-            //    var results = await query.ToListAsync();
-
-            //    CustomerListView.ItemsSource = results;
-        }
-
-
-
-        ///お試しGoogleMAP
-        private const string GoogleMapsApiKey = "YOUR_API_KEY_HERE";
-
-        private async void MapSearchButton_Click(object sender, RoutedEventArgs e) {
-            string address = MapSearchTextBox.Text.Trim();
+            string address = AddressTextBox.Text.Trim();
             if (string.IsNullOrEmpty(address)) {
-                MessageBox.Show("住所を入力してください。");
+                PostcodeTextBox.Text = "";
                 return;
             }
 
-            string url = BuildStaticMapUrl(address);
-            await LoadMapImageAsync(url);
+            _ctsZip = new CancellationTokenSource();
+            var token = _ctsZip.Token;
+
+            _ = Task.Run(async () => {
+                try {
+                    await Task.Delay(500, token); // デバウンス
+                    if (token.IsCancellationRequested) return;
+
+                    string postal = "検索中...";
+                    await Dispatcher.InvokeAsync(() => PostcodeTextBox.Text = postal);
+
+                    string url = $"https://zipcloud.ibsnet.co.jp/api/search?address={Uri.EscapeDataString(address)}";
+                    string json = await _httpClient.GetStringAsync(url);
+
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var result = JsonSerializer.Deserialize<ZipCloudResponse>(json, options);
+
+                    if (result != null && result.Status == 200 && result.Results?.Count > 0) {
+                        postal = result.Results[0].Zipcode;
+                        if (postal.Length == 7) postal = postal.Insert(3, "-");
+                    } else {
+                        postal = "該当なし";
+                    }
+
+                    await Dispatcher.InvokeAsync(() => PostcodeTextBox.Text = postal);
+                }
+                catch (TaskCanceledException) { /* 無視 */ }
+                catch {
+                    await Dispatcher.InvokeAsync(() => PostcodeTextBox.Text = "通信エラー");
+                }
+            });
         }
 
-        private string BuildStaticMapUrl(string address) {
-            // 住所はURLエンコード必須
-            string encodedAddress = Uri.EscapeDataString(address);
+        // ==================== JSON解析用クラス ====================
+        private class ZipCloudResponse {
+            [JsonPropertyName("message")]
+            public string Message { get; set; }
 
-            // 地図サイズやズームレベルは適宜調整してください
-            return $"https://maps.googleapis.com/maps/api/staticmap?center={encodedAddress}&zoom=15&size=480x360&markers=color:red|{encodedAddress}&key={GoogleMapsApiKey}";
+            [JsonPropertyName("status")]
+            public int Status { get; set; }
+
+            [JsonPropertyName("results")]
+            public List<ZipCloudResult> Results { get; set; }
         }
 
-        private async Task LoadMapImageAsync(string url) {
-            try {
-                using HttpClient client = new HttpClient();
-                var stream = await client.GetStreamAsync(url);
+        private class ZipCloudResult {
+            [JsonPropertyName("zipcode")]
+            public string Zipcode { get; set; }
 
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.StreamSource = stream;
-                bitmap.EndInit();
+            [JsonPropertyName("address1")]
+            public string Address1 { get; set; }
 
-                MapImage.Source = bitmap;
-            }
-            catch (Exception ex) {
-                MessageBox.Show("地図画像の取得に失敗しました。\n" + ex.Message);
-            }
+            [JsonPropertyName("address2")]
+            public string Address2 { get; set; }
+
+            [JsonPropertyName("address3")]
+            public string Address3 { get; set; }
         }
-
     }
 }

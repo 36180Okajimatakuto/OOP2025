@@ -7,6 +7,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 namespace CustomerApp.Data
 {
@@ -31,13 +35,10 @@ namespace CustomerApp.Data
         /// 画像
         /// </summary>
         public byte[] Picture { get; set; }
-
-
-
-
-
-
-
+        /// <summary>
+        /// 郵便番号
+        /// </summary>
+        public string Postcode { get; set; } = string.Empty;
 
 
 
@@ -54,10 +55,6 @@ namespace CustomerApp.Data
             image.Freeze();
             return image;
         }
-
-
-
-
     }
 
 }
