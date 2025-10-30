@@ -107,7 +107,19 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_8() {
-           
+            var siborikomi = Library.Categories
+                        .GroupJoin(Library.Books,
+                        c => c.Id,
+                        b => b.CategoryId,
+                        (c, books) => new {
+                            CategoryName = c.Name,
+                            Count = books.Count(),
+                        })
+                    .Where(x=>x.Count >= 4)//4冊以上の同カテゴリーを指定
+                    .Select(x=>x.CategoryName);
+            foreach (var name in siborikomi) {
+                Console.WriteLine(name);
+            }
         }
     }
 }
