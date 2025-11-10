@@ -6,17 +6,17 @@ namespace Section01 {
         static void Main(string[] args) {
             //一気に読み込む
             var filePath = "./Greeting.txt";
-            if (File.Exists(filePath)) {
-                using var reader = new StreamReader(filePath,Encoding.UTF8);
-                while (!reader.EndOfStream) {
-                    var line = reader.ReadLine();
-                    Console.WriteLine(line);
-                
-                }
-
-
+            var lines = File.ReadAllLines(filePath, Encoding.UTF8);
+            foreach (var line in lines) {
+                Console.WriteLine(line);
 
             }
         }
     }
 }
+
+
+
+
+
+
