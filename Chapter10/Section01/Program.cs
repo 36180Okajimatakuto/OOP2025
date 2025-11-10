@@ -4,9 +4,9 @@ using System.Text;
 namespace Section01 {
     internal class Program {
         static void Main(string[] args) {
-            //一気に読み込む
+            //テキストファイルをIEbumerable<string>として扱う
             var filePath = "./Greeting.txt";
-            var lines = File.ReadAllLines(filePath, Encoding.UTF8);
+            var lines = File.ReadLines(filePath);
             foreach (var line in lines) {
                 Console.WriteLine(line);
 
