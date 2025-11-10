@@ -3,13 +3,16 @@ using System.Text;
 
 namespace Section01 {
     internal class Program {
-        static void Main(string[] args) {//10.10　テキストファイルに一行ずつ文字列を出力する
+        static void Main(string[] args) {
+
+            //10.11　既存テキストファイルの末尾に行を追加する
+            var lines = new[] { "===", "京の夢", "大阪の夢", };
             var filePath = "./Example/いろは歌.txt";
-            using (var writer = new StreamWriter(filePath)) {
-                writer.WriteLine("色はにほへど　散りぬるを");
-                writer.WriteLine("我が世たれぞ　常ならむ)");
-                writer.WriteLine("有為の奥山　今日越えて");
-                writer.WriteLine("浅き夢見じ　酢ひもせず");
+            using (var writer = new StreamWriter(filePath, append: true)) {
+                foreach (var line in lines) {
+                    writer.WriteLine(line);
+
+                }
             }
         }
     }
