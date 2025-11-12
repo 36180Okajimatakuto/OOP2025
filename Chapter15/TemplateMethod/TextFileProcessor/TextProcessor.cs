@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextFileProcessor {
+namespace TextProcessor {
     public abstract class TextProcessor {
         public static void Run<T>(string fileName) where T : TextProcessor, new() {
             var self = new T();
