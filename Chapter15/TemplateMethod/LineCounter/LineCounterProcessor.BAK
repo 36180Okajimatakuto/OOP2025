@@ -16,7 +16,7 @@ namespace LineCounter {
             _searchWord = Console.ReadLine();
         }
         protected override void Execute(string line) {
-            
+            _count += line.Split(_searchWord).Length - 1;
         }
 
         protected override void Terminate() => Console.WriteLine("{0}の個数：{1}", _searchWord, _count);
