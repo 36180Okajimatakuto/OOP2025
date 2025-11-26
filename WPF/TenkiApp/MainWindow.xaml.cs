@@ -135,10 +135,53 @@ namespace TenkiApp {
             if (city == "高松") { return (34.3428, 134.0466); } // 高松
             if (city == "松山") { return (33.8392, 132.7652); } // 松山
             if (city == "那覇") { return (26.2124, 127.6809); } // 那覇
+            if (city == "太田") { return (36.2030, 139.6009); } // 太田
+            if (city == "伊勢崎") { return (35.8040, 139.3833); } // 伊勢崎
+            if (city == "桐生") { return (36.3916, 139.3814); } // 桐生
+            if (city == "青森") { return (40.8226, 140.7474); } // 青森
+            if (city == "秋田") { return (39.7186, 140.1025); } // 秋田
+            if (city == "富山") { return (36.6953, 137.2113); } // 富山
+            if (city == "石川") { return (36.5940, 136.6255); } // 石川
+            if (city == "福井") { return (36.0653, 136.2216); } // 福井
+            if (city == "滋賀") { return (35.0044, 135.8686); } // 滋賀
+            if (city == "奈良") { return (34.6851, 135.8048); } // 奈良
+            if (city == "和歌山") { return (34.2260, 135.1675); } // 和歌山
+            if (city == "三重") { return (34.7303, 136.5086); } // 三重
+            if (city == "群馬") { return (36.3910, 139.0606); } // 群馬
+            if (city == "長野") { return (36.6513, 138.1810); } // 長野
+            if (city == "山梨") { return (35.6635, 138.5684); } // 山梨
+            if (city == "愛知") { return (35.1801, 136.9066); } // 愛知
+            if (city == "岐阜") { return (35.3912, 136.7223); } // 岐阜
+            if (city == "静岡") { return (34.9756, 138.3828); } // 静岡
+            if (city == "奈良") { return (34.6851, 135.8048); } // 奈良
+            if (city == "佐賀") { return (33.2635, 130.2980); } // 佐賀
+            if (city == "大分") { return (33.2382, 131.6126); } // 大分
+            if (city == "宮崎") { return (31.9111, 131.4231); } // 宮崎
+            if (city == "山口") { return (34.1859, 131.4714); } // 山口
+            if (city == "広島") { return (34.3853, 132.4553); } // 広島
+            if (city == "高知") { return (33.5597, 133.5311); } // 高知
+            if (city == "熊本") { return (32.8031, 130.7079); } // 熊本
+            if (city == "長野") { return (36.6513, 138.1810); } // 長野
+            if (city == "福島") { return (37.7598, 140.4741); } // 福島
+            if (city == "茨城") { return (36.3414, 140.4467); } // 茨城
+            if (city == "栃木") { return (36.5657, 139.8836); } // 栃木
+            if (city == "滋賀") { return (35.0044, 135.8686); } // 滋賀
+            if (city == "宮城") { return (38.2682, 140.8694); } // 宮城
+            if (city == "札幌") { return (43.0618, 141.3545); } // 札幌
+            if (city == "函館") { return (41.7681, 140.7300); } // 函館
+            if (city == "旭川") { return (43.7707, 142.3655); } // 旭川
+            if (city == "帯広") { return (42.9333, 143.1917); } // 帯広
+            if (city == "釧路") { return (42.9777, 144.3800); } // 釧路
+            if (city == "北見") { return (43.8014, 143.8954); } // 北見
+            if (city == "室蘭") { return (42.3184, 140.9765); } // 室蘭
+            if (city == "苫小牧") { return (42.6323, 141.6040); } // 苫小牧
+            if (city == "小樽") { return (43.2006, 141.0036); } // 小樽
+            if (city == "北海道") { return (43.5, 142.0); }
 
-            // 上記以外の都市（無効な都市）
+              // 上記以外の都市（無効な都市）
             return (0, 0); // 無効な都市名
         }
+      
 
         // weatherCodeを人間にわかりやすい天気に変換するメソッド
         private string GetWeatherDescription(string weatherCode) {
@@ -172,13 +215,26 @@ namespace TenkiApp {
             }
         }
 
-        // 検索ボタンのクリックイベント
-        private async void SearchWeather(object sender, RoutedEventArgs e) {
-            string city = CityInput.Text.Trim();  // 入力された都市名を取得
+        // 検索ボタンのクリックイベント(消去しました）
+        //private async void SearchWeather(object sender, RoutedEventArgs e) {
+        //    string city = CityInput.Text.Trim();  // 入力された都市名を取得
+        //    if (!string.IsNullOrEmpty(city)) {
+        //        await GetWeatherDataAsync(city);
+        //    } else {
+        //        MessageBox.Show("都市名を入力してください。");
+        //    }
+        //}
+
+        // ComboBoxの選択変更時に天気情報を検索
+        private async void CityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            // ComboBoxから選ばれた都市名を取得
+            string city = (CityInput.SelectedItem as ComboBoxItem)?.Content.ToString().Trim();
+
             if (!string.IsNullOrEmpty(city)) {
+                // 非同期で天気データを取得
                 await GetWeatherDataAsync(city);
             } else {
-                MessageBox.Show("都市名を入力してください。");
+                MessageBox.Show("都市名が選ばれていません。");
             }
         }
 

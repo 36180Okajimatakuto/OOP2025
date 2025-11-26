@@ -8,6 +8,7 @@
         Title="Weather App" Height="600" Width="1000">
 
     <Window.Resources>
+        
         <!-- Watermark for TextBox -->
         <Style x:Key="WatermarkTextBox" TargetType="TextBox">
             <Style.Setters>
@@ -34,7 +35,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Left Column: Weather Information -->
-        <Grid Grid.Column="0" Background="#e0f7fa" HorizontalAlignment="Left" Width="351">
+        <Grid Grid.Column="0" Background="LightBlue" HorizontalAlignment="Left" Width="351" >
             <TextBlock Text="現在の天気" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,41,0,0"/>
 
             <!-- Display Weather Info -->
@@ -75,7 +76,8 @@
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
                 Margin="0,60,0,0"
-                IsEditable="True">
+                IsEditable="True"
+                SelectionChanged="CityComboBox_SelectionChanged">
                 <ComboBoxItem Content="東京"/>
                 <ComboBoxItem Content="大阪"/>
                 <ComboBoxItem Content="京都"/>
@@ -96,12 +98,49 @@
                 <ComboBoxItem Content="高松"/>
                 <ComboBoxItem Content="松山"/>
                 <ComboBoxItem Content="那覇"/>
+                <ComboBoxItem Content="太田" />
+                <ComboBoxItem Content="伊勢崎" />
+                <ComboBoxItem Content="桐生" />
+                <ComboBoxItem Content="青森" />
+                <ComboBoxItem Content="秋田" />
+                <ComboBoxItem Content="富山" />
+                <ComboBoxItem Content="石川" />
+                <ComboBoxItem Content="福井" />
+                <ComboBoxItem Content="滋賀" />
+                <ComboBoxItem Content="奈良" />
+                <ComboBoxItem Content="和歌山" />
+                <ComboBoxItem Content="三重" />
+                <ComboBoxItem Content="群馬" />
+                <ComboBoxItem Content="長野" />
+                <ComboBoxItem Content="山梨" />
+                <ComboBoxItem Content="愛知" />
+                <ComboBoxItem Content="岐阜" />
+                <ComboBoxItem Content="静岡" />
+                <ComboBoxItem Content="佐賀" />
+                <ComboBoxItem Content="大分" />
+                <ComboBoxItem Content="宮崎" />
+                <ComboBoxItem Content="山口" />
+                <ComboBoxItem Content="高知" />
+                <ComboBoxItem Content="熊本" />
+                <ComboBoxItem Content="福島" />
+                <ComboBoxItem Content="茨城" />
+                <ComboBoxItem Content="栃木" />
+                <ComboBoxItem Content="宮城" />
+                <ComboBoxItem Content="札幌" />
+                <ComboBoxItem Content="函館" />
+                <ComboBoxItem Content="旭川" />
+                <ComboBoxItem Content="帯広" />
+                <ComboBoxItem Content="釧路" />
+                <ComboBoxItem Content="北見" />
+                <ComboBoxItem Content="室蘭" />
+                <ComboBoxItem Content="苫小牧" />
+                <ComboBoxItem Content="小樽" />
+                <ComboBoxItem Content="北海道"/>
             </ComboBox>
             <!-- Search Button -->
-            <Button Content="Search" Width="100" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,110,0,0" Background="#1E88E5" Foreground="White" FontWeight="Bold" Click="SearchWeather"/>
 
             <!-- Display Current Weather Data -->
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,160,0,0">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,160,0,0" Background="Beige">
                 <TextBlock FontSize="40" Text="" />
                 <TextBlock x:Name="CurrentWeatherDescription" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock x:Name="CurrentTemperature" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center"/>
